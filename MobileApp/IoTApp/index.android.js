@@ -1,10 +1,18 @@
+
+import React from 'react';
+import { AppRegistry, } from 'react-native';
+import iotapp from './app';
+        
+AppRegistry.registerComponent('IoTApp', () => iotapp);
+
+
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
  * @flow
  */
 
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -50,4 +58,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('IoTApp', () => IoTApp);
+AppRegistry.registerComponent('IoTApp', () => IoTApp);*/
