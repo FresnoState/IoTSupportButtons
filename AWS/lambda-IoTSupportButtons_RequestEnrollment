@@ -7,7 +7,7 @@
  * 2. Generate A Tecket (referencing the Service Metadata DDB)
  * 
  * By Max Tsai
- * Last Updated: 01/27/2017
+ * Last Updated: 01/24/2017
  * 
  */
 
@@ -123,6 +123,7 @@ function createTopic(topicName, cb) {
 exports.handler = (event, context, callback) => {
     console.log('Received event:', event.clickType);
     
+    var maxerrorcode = "";
     
     // Issue Report Database
     var ddbdata;
@@ -144,6 +145,7 @@ exports.handler = (event, context, callback) => {
     }, function(err, data) {
         if (err) {
             console.log('iotButtonMDTable db error: '+JSON.stringify(err, null, '  '));
+            maxerrorcode = JSON.stringify(err, null, '  ');
         }
         else {
             // console.log('iotButtonMDTable success: '+ JSON.stringify(data, null, '  '));
@@ -179,6 +181,7 @@ exports.handler = (event, context, callback) => {
             }, function(err, data) {
                 if (err) {
                     console.log('db error: '+JSON.stringify(err, null, '  '));
+                    maxerrorcode = JSON.stringify(err, null, '  ');
                 }
                 else {
                     console.log('db success: Support Request Added.');
@@ -187,25 +190,27 @@ exports.handler = (event, context, callback) => {
         }
     });
     
-    return "200";
+    // return "200";
     // SKIP SNS BELOW -- janq 01/28/2017
     
-    // create/get topic
-    createTopic('aws-iot-button-sns-topic', (err, topicArn) => {
-        if (err) {
-            return callback(err);
-        }
-        console.log(`Publishing to topic ${topicArn}`);
-        
-        
-        // publish message
-        const params = {
-            Message: `${event.serialNumber}: ${event.clickType} \nBattery voltage: ${event.batteryVoltage} :: ${ddbdata}`,
-            Subject: `IoTSupportButtons: ${event.serialNumber}`,
-            TopicArn: topicArn,
-        };
-        
-        // result will go to function callback
-        SNS.publish(params, callback);
-    });
+    if (maxerrorcode) {
+        // create/get topic
+        createTopic('aws-iot-button-sns-topic', (err, topicArn) => {
+            if (err) {
+                return callback(err);
+            }
+            console.log(`Publishing to topic ${topicArn}`);
+            
+            
+            // publish message
+            const params = {
+                Message: `maxerrorcode \n ${event.serialNumber}: ${event.clickType} \nBattery voltage: ${event.batteryVoltage} :: ${ddbdata}`,
+                Subject: `IoTSupportButtons: ${event.serialNumber} ERROR`,
+                TopicArn: topicArn,
+            };
+            
+            // result will go to function callback
+            SNS.publish(params, callback);
+        });
+    }
 };
