@@ -1,0 +1,211 @@
+'use strict';
+
+/**
+ * IoTSupportButtons_RequestEnrollment
+ *
+ * 1. Log the INCOMING Requests
+ * 2. Generate A Tecket (referencing the Service Metadata DDB)
+ * 
+ * By Max Tsai
+ * Last Updated: 01/27/2017
+ * 
+ */
+
+const AWS = require('aws-sdk');
+
+// add access to DynamoDB
+var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+
+// add access to SNS
+const EMAIL = process.env.email;
+const SNS = new AWS.SNS({ apiVersion: '2010-03-31' });
+
+
+/**
+ * This is the email thing
+ */
+
+function findExistingSubscription(topicArn, nextToken, cb) {
+    const params = {
+        TopicArn: topicArn,
+        NextToken: nextToken || null,
+    };
+    SNS.listSubscriptionsByTopic(params, (err, data) => {
+        if (err) {
+            console.log('Error listing subscriptions.', err);
+            return cb(err);
+        }
+        const subscription = data.Subscriptions.filter((sub) => sub.Protocol === 'email' && sub.Endpoint === EMAIL)[0];
+        if (!subscription) {
+            if (!data.NextToken) {
+                cb(null, null); // indicate that no subscription was found
+            } else {
+                findExistingSubscription(topicArn, data.NextToken, cb); // iterate over next token
+            }
+        } else {
+            cb(null, subscription); // a subscription was found
+        }
+    });
+}
+
+/**
+ * Subscribe the specified EMAIL to a topic.
+ */
+function createSubscription(topicArn, cb) {
+    // check to see if a subscription already exists
+    findExistingSubscription(topicArn, null, (err, res) => {
+        if (err) {
+            console.log('Error finding existing subscription.', err);
+            return cb(err);
+        }
+        if (!res) {
+            // no subscription, create one
+            const params = {
+                Protocol: 'email',
+                TopicArn: topicArn,
+                Endpoint: EMAIL,
+            };
+            SNS.subscribe(params, (subscribeErr) => {
+                if (subscribeErr) {
+                    console.log('Error setting up email subscription.', subscribeErr);
+                    return cb(subscribeErr);
+                }
+                // subscription complete
+                console.log(`Subscribed ${EMAIL} to ${topicArn}.`);
+                cb(null, topicArn);
+            });
+        } else {
+            // subscription already exists, continue
+            cb(null, topicArn);
+        }
+    });
+}
+
+/**
+ * Create a topic.
+ */
+function createTopic(topicName, cb) {
+    SNS.createTopic({ Name: topicName }, (err, data) => {
+        if (err) {
+            console.log('Creating topic failed.', err);
+            return cb(err);
+        }
+        const topicArn = data.TopicArn;
+        console.log(`Created topic: ${topicArn}`);
+        console.log('Creating subscriptions.');
+        createSubscription(topicArn, (subscribeErr) => {
+            if (subscribeErr) {
+                return cb(subscribeErr);
+            }
+            // everything is good
+            console.log('Topic setup complete.');
+            cb(null, topicArn);
+        });
+    });
+}
+
+/** =================================================================== **/
+
+/**
+ * The following JSON template shows what is sent as the payload:
+{
+    "serialNumber": "GXXXXXXXXXXXXXXXXX",
+    "batteryVoltage": "xxmV",
+    "clickType": "SINGLE" | "DOUBLE" | "LONG"
+}
+ *
+ * A "LONG" clickType is sent if the first press lasts longer than 1.5 seconds.
+ * "SINGLE" and "DOUBLE" clickType payloads are sent for short clicks.
+ *
+ * For more documentation, follow the link below.
+ * http://docs.aws.amazon.com/iot/latest/developerguide/iot-lambda-rule.html
+ */
+exports.handler = (event, context, callback) => {
+    console.log('Received event:', event.clickType);
+    
+    
+    // Issue Report Database
+    var ddbdata;
+    
+    
+    // Debug Only: DDB - testing by list all the tables
+    /** dynamodb.listTables(function(err, data) {
+      // ddbdata = ddbdata + JSON.stringify(data, null, '  ');
+      // console.log(`Tables ( ${event.serialNumber} )` + JSON.stringify(data, null, '  '));
+      console.log('Table Listed');
+    }); **/
+
+
+    dynamodb.getItem({
+        "TableName": "iotButtonMDTable",
+        "Key": {
+            "serialNumber": { "S": event.serialNumber }
+        }
+    }, function(err, data) {
+        if (err) {
+            console.log('iotButtonMDTable db error: '+JSON.stringify(err, null, '  '));
+        }
+        else {
+            // console.log('iotButtonMDTable success: '+ JSON.stringify(data, null, '  '));
+            ddbdata = data;
+            
+            var datetime = new Date().getTime().toString();
+    
+            // for (var key in ddbdata.Item ) {
+            //    console.log(key + " : " + ddbdata.Item.key.S);
+            // }
+            
+            dynamodb.putItem({
+                "TableName": "iotButtonREQTable",
+                "Item" : {
+                    "serialNumber": {"S": event.serialNumber },
+                    "batteryvoltage": {"S": event.batteryVoltage },
+                    "clicktype": {"S": event.clickType},
+                    "timeStamp": {"S": datetime },
+                    "status": {"S": "new"},
+                    "action": {"S": ddbdata.Item.action.S },
+                    "description": {"S": ddbdata.Item.description.S },
+                    "division": {"S": ddbdata.Item.division.S },
+                    "location": {"S": ddbdata.Item.location.S },
+                    "item": {"S": ddbdata.Item.item.S },
+                    "notes": {
+                        "M": {
+                          datetime: {
+                            "S": "Notification Received"
+                          }
+                        }
+                        }
+                    }
+            }, function(err, data) {
+                if (err) {
+                    console.log('db error: '+JSON.stringify(err, null, '  '));
+                }
+                else {
+                    console.log('db success: Support Request Added.');
+                }
+            });
+        }
+    });
+    
+    return "200";
+    // SKIP SNS BELOW -- janq 01/28/2017
+    
+    // create/get topic
+    createTopic('aws-iot-button-sns-topic', (err, topicArn) => {
+        if (err) {
+            return callback(err);
+        }
+        console.log(`Publishing to topic ${topicArn}`);
+        
+        
+        // publish message
+        const params = {
+            Message: `${event.serialNumber}: ${event.clickType} \nBattery voltage: ${event.batteryVoltage} :: ${ddbdata}`,
+            Subject: `IoTSupportButtons: ${event.serialNumber}`,
+            TopicArn: topicArn,
+        };
+        
+        // result will go to function callback
+        SNS.publish(params, callback);
+    });
+};
