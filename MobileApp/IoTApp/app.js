@@ -20,22 +20,31 @@ global.headers = {
 
 global.sampleData = [   
     {
-        "room": '3',
-        "phone": 'DISCOVERe Hub',
+        "service_owner": 'DISCOVERe Hub',
+        "location": 'Libray Room 201',
+        "item": 'RM201',
+        "type": 'P4HL',
         "time": '1/24/17 3:47pm',
-        "status": 'N'
+        "status": 'N',
+        "notes": []
     },
     {
-        "room": '2',
-        "phone": 'Library IT',
+        "service_owner": 'Library IT',
+        "location": '1st Floor',
+        "item": 'WRK#3',
+        "type": 'P2RP',
         "time": '1/23/17 3:46pm',
-        "status": 'C'
+        "status": 'C',
+        "notes": []
     },
     {
-        "room": '1',
-        "phone": 'DISCOVERe Hub',
+        "service_owner": 'Library IT',
+        "location": 'Library 2nd Floor',
+        "item": 'WRK#10',
+        "type": 'P2RP',
         "time": '1/22/17 3:45pm',
-        "status": 'S'
+        "status": 'S',
+        "notes": []
     }
     
 ];
@@ -51,8 +60,8 @@ global.getRequestIndex = (id) => {  //helper function for update simulating func
 ////This can be in a styles.js file, like a global style sheet
 //alert(Dimensions.get('window').height+" "+Dimensions.get('window').width);
 var width = Dimensions.get('window').width;
-global.fontScale;
-if(width > 900){
+global.fontScale = 12;
+/*if(width > 900){
     fontScale = 36;
 }
 else if(width > 500){
@@ -63,14 +72,13 @@ else if(width > 300){
 }
 else{
     fontScale = 16;
-};
-//alert(fontScale);
+};*/
 
 
 //import custom scene level components
-//var RequestList = require('./RequestList.js');
+var RequestList = require('./RequestList.js');
 //var RequestList = require('./RequestList_filter_viewAllOnly.js');
-var RequestList = require('./RequestList_filter.js');
+//var RequestList = require('./RequestList_filter.js');
 var ContactNotes = require('./ContactNotes.js');
 var ServiceNotes = require('./ServiceNotes');
 

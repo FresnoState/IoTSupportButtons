@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 
 //import { Col, Row, Grid } from "react-native-easy-grid";
+import { Col, Row, Grid, Card, CardItem} from 'native-base';
 
 export class RequestRow extends Component{
     constructor(props){
@@ -53,36 +54,55 @@ export class RequestRow extends Component{
         }
     }
     
-    /*render() {
+    render() {
+        var rowColor = (this.props.rowID % 2) ? 'skyblue' : 'lightyellow'; //test colors
+        console.log(rowColor);
         return (
             <View>
-            <Grid>
-                <Row>
-                    <Col size={1}>
-                        <Text style={{fontSize: fontScale}}>
-                            {this.props.requestData.room}
-                        </Text>
-                    </Col>
-                    <Col size={2}>
-                        <Text style={{fontSize: fontScale}}>
-                            {this.props.requestData.phone}
-                        </Text>
-                    </Col>
-                    <Col size={2}>
-                        <Text style={{fontSize: fontScale}}>
-                            {this.props.requestData.time}
-                        </Text>
-                    </Col>
-                    <Col size={2}>
-                    {this.renderStatusColumn()}
-                    </Col>
-                </Row>
-            </Grid>
+                <Grid>
+                    <Card style={{backgroundColor: rowColor}}>
+                        <Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.location}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.item}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.type}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.time}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    {this.renderStatusColumn()}
+                                </Col>
+                            </Row>
+                        </Row>
+                    </Card>
+                </Grid>
             </View>
         );
-    }*/
+    }
     
-    render() {
+    /*render() {
         return (
             <View style={{flexDirection: 'row'}}>
                 <View style={{flex: 1, flexDirection: 'row'}}>
@@ -105,7 +125,7 @@ export class RequestRow extends Component{
                 </View>
             </View>
         );
-    }
+    }*/
 }
 
 module.exports = RequestRow;
