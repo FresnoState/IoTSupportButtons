@@ -1,56 +1,46 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
   Text,
   View,
-  Switch,
   Picker,
   Item
 } from 'react-native';
 
+import {Col, Row, Grid, Container, Content, Header, Title, Button} from 'native-base';
+
 export class RequestFilters extends Component{
     constructor(props){
         super(props);
+        this.state = {selectedServiceOwner: this.props.viewServiceOwner};
     }
     
-    onFilterStage(stage){
-        this.props.onFilterStage(stage); //calls parent component RequestList's onFilterStage function, handles state change and filtration
-    }
-    
-    onFilterDept(dept){
-        this.props.onFilterDept(dept); //calls parent component RequestList's onFilterStage function, handles state change and filtration
+    submit(){
+        this.props.onFilterServiceOwner(this.state.selectedServiceOwner);
+        this.props.navigator.pop(); 
     }
     
     render() {
         return (
-            <View style={{flexDirection: 'row'}}>
-                <View style={{flexDirection: 'column'}}>
-                    <Text style={{fontSize: fontScale, textAlign: 'center'}}>Request Stage</Text>
-                    <Picker 
+            <Container>
+                <Header>
+                    <Title>Filter Requests</Title>
+                </Header>
+                <Content>
+                    <Text style={{fontSize: fontScale}}>Select Service Owner</Text>
+                    <Picker
                         itemStyle={{fontSize: fontScale}}
-                        selectedValue={this.props.viewStage}
-                        onValueChange={(stage) => (this.onFilterStage(stage))}
+                        selectedValue={this.state.selectedServiceOwner}
+                        onValueChange={(serviceOwner) => (this.setState({selectedServiceOwner: serviceOwner}))}
                     >
-                        <Item label="Open" value="Open" />
-                        <Item label="Closed" value="Closed" />
-                        <Item label="All" value="All" />
+                        <Item label="All Service Owners" value="All Service Owners" />
+                        <Item label="DISCOVERe Hub" value="DISCOVERe Hub" />
+                        <Item label="Library IT" value="Library IT" />
                     </Picker>
-                </View>
-                <Text>{"\t"}</Text>
-                <View style={{flexDirection: 'column'}}>
-                    <Text style={{fontSize: fontScale, textAlign: 'center'}}>Department</Text>
-                    <Picker 
-                        itemStyle={{fontSize: fontScale}}
-                        selectedValue={this.props.viewDept}
-                        onValueChange={(dept) => (this.onFilterDept(dept))}
-                     >  
-                        <Item label="All" value="All" />
-                        <Item label="CVS" value="CVS" />
-                        <Item label="D. Hub" value="D. Hub" />
-                        <Item label="Camp. Fac." value="Camp. Fac." />
-                    </Picker>
-                </View>
-            </View>
+                    <Button onPress={this.submit.bind(this)}>
+                        OK
+                    </Button>
+                </Content>
+            </Container>
         );
     }
 }

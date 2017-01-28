@@ -77,9 +77,7 @@ else{
 
 //import custom scene level components
 var RequestList = require('./Components/RequestPages/RequestList.js');
-//var RequestList = require('./RequestList_filter_viewAllOnly.js');
-//var RequestList = require('./RequestList_filter.js');
-var RequestFilters = require('./Components/RequestPages/RequestFilter.js');
+var RequestFilters = require('./Components/RequestPages/RequestFilters.js');
 var ContactNotes = require('./Components/NotePages/ContactNotes.js');
 var ServiceNotes = require('./Components/NotePages/ServiceNotes.js');
 
