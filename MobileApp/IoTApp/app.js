@@ -76,11 +76,12 @@ else{
 
 
 //import custom scene level components
-var RequestList = require('./RequestList.js');
+var RequestList = require('./Components/RequestPages/RequestList.js');
 //var RequestList = require('./RequestList_filter_viewAllOnly.js');
 //var RequestList = require('./RequestList_filter.js');
-var ContactNotes = require('./ContactNotes.js');
-var ServiceNotes = require('./ServiceNotes');
+var RequestFilters = require('./Components/RequestPages/RequestFilter.js');
+var ContactNotes = require('./Components/NotePages/ContactNotes.js');
+var ServiceNotes = require('./Components/NotePages/ServiceNotes.js');
 
 
 export default class iotapp extends Component {
@@ -95,6 +96,10 @@ export default class iotapp extends Component {
                 <RequestList navigator={navigator}/>
               );
               break;
+          case "Request Filters":
+              return (
+                  <RequestFilters navigator={navigator} {...route.passProps} />
+              );
           case "Contact Notes":
               return (
                 <ContactNotes navigator={navigator} {...route.passProps} />

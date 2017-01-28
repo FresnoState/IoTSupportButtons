@@ -7,7 +7,6 @@ import {
   Navigator
 } from 'react-native';
 
-//import { Col, Row, Grid } from "react-native-easy-grid";
 import { Col, Row, Grid, Card, CardItem} from 'native-base';
 
 export class RequestRow extends Component{
@@ -22,7 +21,7 @@ export class RequestRow extends Component{
                     title: "Contact Notes", 
                     index: 1,
                     passProps: {
-                        "requestData": this.props.requestData    //passes requestData json
+                        "requestData": this.props.requestData //passes requestData json
                     }
                 });
                 break;
@@ -56,7 +55,6 @@ export class RequestRow extends Component{
     
     render() {
         var rowColor = (this.props.rowID % 2) ? 'skyblue' : 'lightyellow'; //test colors
-        console.log(rowColor);
         return (
             <View>
                 <Grid>
