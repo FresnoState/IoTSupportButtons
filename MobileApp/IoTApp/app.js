@@ -11,52 +11,6 @@ import {
 
 import Dimensions from 'Dimensions';
 
-global.headers = {
-    "room": 'ID',
-    "phone": 'Service Owner',
-    "time": 'Time',
-    "status": 'Status'
-};
-
-global.sampleData = [   
-    {
-        "service_owner": 'DISCOVERe Hub',
-        "location": 'Libray Room 201',
-        "item": 'RM201',
-        "type": 'P4HL',
-        "time": '1/24/17 3:47pm',
-        "status": 'N',
-        "notes": []
-    },
-    {
-        "service_owner": 'Library IT',
-        "location": '1st Floor',
-        "item": 'WRK#3',
-        "type": 'P2RP',
-        "time": '1/23/17 3:46pm',
-        "status": 'C',
-        "notes": []
-    },
-    {
-        "service_owner": 'Library IT',
-        "location": 'Library 2nd Floor',
-        "item": 'WRK#10',
-        "type": 'P2RP',
-        "time": '1/22/17 3:45pm',
-        "status": 'S',
-        "notes": []
-    }
-    
-];
-
-global.getRequestIndex = (id) => {  //helper function for update simulating functions
-    for(var i=0; i < sampleData.length; ++i){
-        if(sampleData[i].room == id.room && sampleData[i].phone == id.phone && sampleData[i].time == id.time){
-            return i;
-        }
-    }
-};
-
 ////This can be in a styles.js file, like a global style sheet
 //alert(Dimensions.get('window').height+" "+Dimensions.get('window').width);
 var width = Dimensions.get('window').width;

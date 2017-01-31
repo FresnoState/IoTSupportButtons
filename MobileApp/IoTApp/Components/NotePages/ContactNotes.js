@@ -3,12 +3,14 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  Button,
   Picker,
   Item,
   View,
-  Navigator
+  Navigator,
+  Button
 } from 'react-native';
+
+import {Col, Row, Grid, Container,  Header, Title, List, ListItem, InputGroup, Input} from 'native-base';
 
 import Dimensions from 'Dimensions';
 
@@ -25,12 +27,12 @@ export class ContactNotes extends Component {
             alert("Select a department and add notes");
         }
         else{
-            var id = { //using room, phone, and time combination as a unique identifier for the request
+            /*var id = { //using room, phone, and time combination as a unique identifier for the request
                 "room": this.props.requestData.room,
                 "phone": this.props.requestData.phone,
                 "time": this.props.requestData.time
             };
-            this._markRequestAsContacted(id, this.state.dept, encodeURIComponent(this.state.contact_notes));
+            this._markRequestAsContacted(id, this.state.dept, encodeURIComponent(this.state.contact_notes));*/
             this.props.navigator.pop(); //return to Request List
         }
     }
@@ -44,6 +46,52 @@ export class ContactNotes extends Component {
     }
     
     render(){
+        return (
+            <Container>
+                <Header>
+                    <Title>Contact Notes</Title>
+                </Header>
+                <View style={{flex: 1}}>
+                    <Grid>
+                        <Row>
+                            <NotesHeader title={"Contact Notes"} {...this.props} />
+                        </Row>
+                        <Row>
+                            <View style={{flex: 1}}>
+                            <InputGroup>
+                                <Input 
+                                    placeholder="Add Contact Notes Here" 
+                                    style={{backgroundColor: '#EEE', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width*0.8, fontSize: fontScale}}
+                                    multiline
+                                    />
+                            </InputGroup>
+                            </View>
+                        </Row>
+                        <Row>
+                            <View style={{flex: 1}}>
+                            <Picker 
+                                itemStyle={{fontSize: fontScale}}
+                                selectedValue={this.state.dept}
+                                onValueChange={(selectedDept) => (this.setState({dept: selectedDept}))} >
+                                <Item label="Select Department" value='' />
+                                <Item label="CVS" value="CVS" />
+                                <Item label="D. Hub" value="D. Hub" />
+                                <Item label="Camp. Fac." value="Camp. Fac." />
+                                <Item label="Closed" value="Closed" />
+                            </Picker>
+                            </View>
+                        </Row>
+                        <Row>
+                            <Button onPress={this.onSubmit.bind(this)} title="Submit" />
+                               
+                        </Row>
+                    </Grid>
+                </View>
+            </Container>
+        );
+    }
+    
+    /*render(){
         return (
             <View style={{flex: 1, alignItems: 'center'}}>
                 <NotesHeader title={"Contact Notes"} {...this.props} />
@@ -74,7 +122,7 @@ export class ContactNotes extends Component {
                 </View>
             </View>
         );
-    }
+    }*/    
 }
 
 module.exports = ContactNotes;

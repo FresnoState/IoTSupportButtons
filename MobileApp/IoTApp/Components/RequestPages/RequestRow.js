@@ -3,7 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
   Navigator
 } from 'react-native';
 
@@ -15,8 +15,8 @@ export class RequestRow extends Component{
     }
     
     goToNotes(){ //navigates to appropriate note form scene while passing the request Data as props
-        switch(this.props.requestData.status){
-            case 'N':
+        switch(this.props.requestData.currstatus.S){
+            case 'new':
                 this.props.navigator.push({
                     title: "Contact Notes", 
                     index: 1,
@@ -25,7 +25,7 @@ export class RequestRow extends Component{
                     }
                 });
                 break;
-            case 'C':
+            case 'open':
                 this.props.navigator.push({
                     title: "Service Notes", 
                     index: 1,
@@ -38,24 +38,9 @@ export class RequestRow extends Component{
         
     }
     
-    renderStatusColumn(){ //renders the status column of the row
-        if(this.props.requestData.status != 'S' && this.props.requestData.department != "Closed" ){ //status is only "touchable" if it is not closed/serviced
-            return (
-                <TouchableHighlight onPress={this.goToNotes.bind(this)}>
-                    <Text style={{fontSize: fontScale}}>{this.props.requestData.status}</Text>
-                </TouchableHighlight>
-            );
-        }
-        else{
-            return (
-                <Text style={{fontSize: fontScale}}>{this.props.requestData.status}</Text>
-            );
-        }
-    }
-    
     render() {
-        var rowColor = (this.props.rowID % 2) ? 'skyblue' : 'lightyellow'; //test colors
-        return (
+        var rowColor = (this.props.rowID % 2) ? '#CCC' : '#AAA'; //test colors
+        /*var rowCard = (
             <View>
                 <Grid>
                     <Card style={{backgroundColor: rowColor}}>
@@ -90,7 +75,9 @@ export class RequestRow extends Component{
                             </Row>
                             <Row style={{margin: 5}}>
                                 <Col>
-                                    {this.renderStatusColumn()}
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.status}
+                                    </Text>
                                 </Col>
                             </Row>
                         </Row>
@@ -98,32 +85,67 @@ export class RequestRow extends Component{
                 </Grid>
             </View>
         );
-    }
+        if(this.props.requestData.status != 'S'){
+            console.log(rowCard);
+            return(
+                <TouchableHighlight onPress={this.goToNotes.bind(this)}>
+                    {rowCard}
+                </TouchableHighlight>
+            );
+        }
+        else{
+            return rowCard;
+        }
+    */
     
-    /*render() {
-        return (
-            <View style={{flexDirection: 'row'}}>
-                <View style={{flex: 1, flexDirection: 'row'}}>
-                    <Text style={{fontSize: fontScale}}>
-                        {this.props.requestData.room+"\t"}
-                    </Text>
-                </View>
-                <View style={{flexDirection: 'row', flexWrap: 'wrap', width: 100}}>
-                    <Text style={{fontSize: fontScale}}>
-                        {this.props.requestData.phone+"\t\t"}
-                    </Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                    <Text style={{fontSize: fontScale}}>
-                        {this.props.requestData.time+"\t"}
-                    </Text>
-                </View>
-                <View style={{flexDirection: 'row'}}>
-                {this.renderStatusColumn()}
-                </View>
+    return (
+        <TouchableOpacity onPress={this.goToNotes.bind(this)}>
+            <View>
+                <Grid>
+                    <Card style={{backgroundColor: rowColor}}>
+                        <Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.location.S}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.item.S}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.action.S}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
+                                    </Text>
+                                </Col>
+                            </Row>
+                            <Row style={{margin: 5}}>
+                                <Col>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {this.props.requestData.currstatus.S}
+                                    </Text>
+                                </Col>
+                            </Row>
+                        </Row>
+                    </Card>
+                </Grid>
             </View>
-        );
-    }*/
+        </TouchableOpacity>
+     );
+   } 
 }
 
 module.exports = RequestRow;

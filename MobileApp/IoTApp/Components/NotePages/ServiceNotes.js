@@ -5,10 +5,11 @@ import {
   Text,
   TextInput,
   ScrollView,
-  Button,
   View,
   Navigator
 } from 'react-native';
+
+import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button} from 'native-base';
 
 import Dimensions from 'Dimensions';
 
@@ -25,12 +26,12 @@ export class ServiceNotes extends Component{
             alert("Add notes");
         }
         else{
-            var id = { //using room, phone, and time combination as a unique identifier for the request
+            /*var id = { //using room, phone, and time combination as a unique identifier for the request
                 "room": this.props.requestData.room,
                 "phone": this.props.requestData.phone,
                 "time": this.props.requestData.time
             };
-            this._addServiceNotes(getRequestIndex(id), encodeURIComponent(this.state.service_notes));
+            this._addServiceNotes(getRequestIndex(id), encodeURIComponent(this.state.service_notes));*/
             this.props.navigator.pop(); //return to Request List
         }
     }
@@ -57,12 +58,12 @@ export class ServiceNotes extends Component{
     }
     
     onClose(){ //handles the close ticket process
-        var id = {  //using room, phone, and time combination as a unique identifier for the request
+        /*var id = {  //using room, phone, and time combination as a unique identifier for the request
             "room": this.props.requestData.room,
             "phone": this.props.requestData.phone,
             "time": this.props.requestData.time
         }; 
-        this._markRequestAsServiced(getRequestIndex(id), encodeURIComponent(this.state.service_notes));
+        this._markRequestAsServiced(getRequestIndex(id), encodeURIComponent(this.state.service_notes));*/
         this.props.navigator.pop(); //return to Request List
     }
     
@@ -74,6 +75,40 @@ export class ServiceNotes extends Component{
     }
     
     render(){
+        return (
+            <Container>
+                <Header>
+                    <Title>Service Notes</Title>
+                </Header>
+                <Content>
+                    <NotesHeader title={"Service Notes"} {...this.props} /> 
+                    <ScrollView>
+                        <Card style={{backgroundColor: '#CCC'}}>
+                            <Text style={{margin: 10}}>this is a note</Text>
+                        </Card>
+                        <Card style={{backgroundColor: '#CCC'}}>
+                            <Text style={{margin: 10}}>another note</Text>
+                        </Card>
+                        <Card style={{backgroundColor: '#CCC'}}>
+                            <Text style={{margin: 10}}>one more note</Text>
+                        </Card>
+                    </ScrollView>
+                    <Grid>
+                        <Row>
+                            <Button onPress={this.onAdd.bind(this)} >
+                                Add
+                            </Button>
+                            <Button onPress={this.confirmClose.bind(this)} >
+                                Close
+                            </Button>
+                        </Row>
+                    </Grid>
+                </Content>
+            </Container>
+        );
+    }
+    
+    /*render(){
         return (
             <View style={{flex: 1, alignItems: 'center'}}>
                 <NotesHeader title={"Service Notes"} {...this.props} />   
@@ -104,7 +139,7 @@ export class ServiceNotes extends Component{
                 </View>
             </View>
         );
-    }
+    }*/
 }
 
 module.exports = ServiceNotes;

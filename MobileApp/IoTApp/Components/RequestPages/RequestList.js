@@ -8,7 +8,7 @@ import {
   Navigator
 } from 'react-native';
 
-import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button} from 'native-base';
+import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button, Footer, FooterTab} from 'native-base';
 
 var RequestRow = require('./RequestRow.js');
 
@@ -27,22 +27,27 @@ export class RequestList extends Component {
       this._getRequestData(); //when returning to this scene, it updates the request data to update the filter
   }
     
-  //REPLACE WITH GET REQUEST
-  _getRequestData(){ //simulates GET data fetch of requests json
-     var p1 = new Promise(function(resolve,reject){
-        resolve(sampleData); //returns json object
-     });
-     p1.then((json) => {
-         this.setState({dataSource: ds.cloneWithRows(json)}); //sets the retrieved data as the Request List datasource
-         this._filterData();
-     })
-     .catch((error) => {
-         console.log(error);
-     });
-  }
+  _getRequestData(){
+     var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/dashboard/';
+     if(this.state.viewServiceOwner != "All Service Owners"){
+         url += this.state.viewServiceOwner;
+         //can add check for status filter here
+     }
+     fetch(url)
+        .then((response) => {
+            return response.json();
+        })                             
+        .then((json) => {
+            this.setState({dataSource: ds.cloneWithRows(json.Items)});
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+      
+      //console.log(this.state.dataSource._dataBlob.s1);
+  } 
     
-  _filterData(){
-      console.log("FILTERED");
+  _filterData(){ //shouldn't be needed once integrated with REST API
       if(this.state.viewServiceOwner != "All Service Owners"){
           var newData = []; //will store the filtered requests to be displayed
           var curData = this.state.dataSource._dataBlob.s1; //gets a copy of the current data stored in the ListView dataSource
@@ -86,9 +91,8 @@ export class RequestList extends Component {
                 <Button transparent>{''}</Button>
                 <Button onPress={this.goToFilters.bind(this)}>=</Button>
             </Header>
-            <View style={{flex: 1}}>{/*Later on will make this separate header component */}
+            <View style={{flex: 1, backgroundColor: '#FFF'}}>{/*Later on will make this separate header component */}
                 <Grid>
-                    <Card>
                         <Row>
                             <Row style={{margin: 5}}>
                                 <Col size={3}>
@@ -114,7 +118,7 @@ export class RequestList extends Component {
                             <Row style={{margin: 5}}>
                                 <Col size={3}>
                                     <Text style={{fontSize: fontScale}}>
-                                        Type
+                                        Action
                                     </Text>
                                 </Col>
                                 <Col size={1}>
@@ -142,7 +146,6 @@ export class RequestList extends Component {
                                 </Col>
                             </Row>
                         </Row>
-                    </Card>
                 </Grid>
             </View>
             <View style={{flex: 10}}>
@@ -153,6 +156,8 @@ export class RequestList extends Component {
                     />
                 </Content>
             </View>
+            <Footer>
+            </Footer>
         </Container>
       );
   }

@@ -15,14 +15,13 @@ import {
 } from 'react-native';
 
 
-export default class renapp extends Component {
+export default class iotapp extends Component {
   constructor(props){
       super(props);
       this.state = {data: ''};
   }
     
   getData(){
-      console.log("TESTING CONSOLE LOG");
       /*fetch('https://facebook.github.io/react-native/movies.json')
             .then((response) => {
                 console.log(response);
@@ -36,7 +35,7 @@ export default class renapp extends Component {
                 console.log(error);
             });*/
       
-      var json = {
+    /*  var json = {
                   "title": "The Basics - Networking",
                   "description": "Your app fetched this from a remote endpoint!",
                   "movies": [
@@ -60,7 +59,19 @@ export default class renapp extends Component {
      .catch((error) => {
          console.log(error);
      });
+      */
       
+    fetch('https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/dashboard/')
+            .then((response) => {
+                console.log(response);
+                return response.json();
+            })                             
+            .then((json) => {
+                console.log(json.Items);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
   } 
     
   handleResponse(movies){
@@ -109,4 +120,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('renapp', () => renapp);
+AppRegistry.registerComponent('IoTApp', () => iotapp);
