@@ -33,8 +33,8 @@ export class RequestFilters extends Component{
                         onValueChange={(serviceOwner) => (this.setState({selectedServiceOwner: serviceOwner}))}
                     >
                         <Item label="All Service Owners" value="All Service Owners" />
-                        <Item label="DISCOVERe Hub" value="DISCOVERe Hub" />
-                        <Item label="Library IT" value="Library IT" />
+                        <Item label="DISCOVERe Hub" value="DISCOVEReHub" />
+                        <Item label="Library IT" value="LibraryIT" />
                     </Picker>
                     <Button onPress={this.submit.bind(this)}>
                         OK

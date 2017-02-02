@@ -85,7 +85,7 @@ export class RequestRow extends Component{
                 </Grid>
             </View>
         );
-        if(this.props.requestData.status != 'S'){
+        if(this.props.requestData.status.S != 'S'){
             console.log(rowCard);
             return(
                 <TouchableHighlight onPress={this.goToNotes.bind(this)}>

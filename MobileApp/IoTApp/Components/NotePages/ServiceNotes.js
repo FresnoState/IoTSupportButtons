@@ -5,11 +5,14 @@ import {
   Text,
   TextInput,
   ScrollView,
+  ListView,
   View,
+  Button,
   Navigator
 } from 'react-native';
 
-import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button} from 'native-base';
+import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, List, ListItem, InputGroup, Input} from 'native-base';
+import {Button as Button2} from 'native-base';
 
 import Dimensions from 'Dimensions';
 
@@ -74,36 +77,68 @@ export class ServiceNotes extends Component{
         alert(Dimensions.get('window').height+" "+Dimensions.get('window').width);
     }
     
+    onCancel(){ //"X" button functionality for closing out of scene
+        this.props.navigator.pop();
+    }
+    
     render(){
         return (
             <Container>
                 <Header>
                     <Title>Service Notes</Title>
+                    <Button2 transparent onPress={this.onCancel.bind(this)}>X</Button2>
                 </Header>
-                <Content>
-                    <NotesHeader title={"Service Notes"} {...this.props} /> 
-                    <ScrollView>
-                        <Card style={{backgroundColor: '#CCC'}}>
-                            <Text style={{margin: 10}}>this is a note</Text>
-                        </Card>
-                        <Card style={{backgroundColor: '#CCC'}}>
-                            <Text style={{margin: 10}}>another note</Text>
-                        </Card>
-                        <Card style={{backgroundColor: '#CCC'}}>
-                            <Text style={{margin: 10}}>one more note</Text>
-                        </Card>
-                    </ScrollView>
+                <View style={{flex: 1}}>
                     <Grid>
-                        <Row>
-                            <Button onPress={this.onAdd.bind(this)} >
-                                Add
-                            </Button>
-                            <Button onPress={this.confirmClose.bind(this)} >
-                                Close
-                            </Button>
+                        <Row size={1}>
+                            <NotesHeader {...this.props} /> 
+                        </Row>
+                        <Row size={2}>
+                            <ScrollView>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>this is a note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>another note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                <Card style={{backgroundColor: '#CCC'}}>
+                                    <Text style={{margin: 10}}>one more note</Text>
+                                </Card>
+                                
+                            </ScrollView>
+                        </Row>
+                        <Row size={2}>
+                            <View style={{flex: 1, alignItems: 'center'}}>
+                                <Input 
+                                    placeholder="Add Contact Notes Here" 
+                                    style={{backgroundColor: '#EEE', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width, fontSize: fontScale}}
+                                    value={this.state.contact_notes}
+                                    onChangeText={(contact_notes) => this.setState({contact_notes})}
+                                    multiline
+                                    />
+                            </View>
+                        </Row>
+                        <Row size={1}>
+                            <Button onPress={this.onAdd.bind(this)} title="Add" />
+                            <Button onPress={this.confirmClose.bind(this)} title="Close" />
                         </Row>
                     </Grid>
-                </Content>
+                </View>
             </Container>
         );
     }

@@ -15,10 +15,10 @@ var RequestRow = require('./RequestRow.js');
 export class RequestList extends Component {
   constructor(props){
       super(props);
-      ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+      const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
       this.state = {dataSource: ds, viewServiceOwner: "All Service Owners"};
   }
-     
+    
   componentDidMount(){
       this._getRequestData();
   }
@@ -38,29 +38,12 @@ export class RequestList extends Component {
             return response.json();
         })                             
         .then((json) => {
-            this.setState({dataSource: ds.cloneWithRows(json.Items)});
+            this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items)});
         })
         .catch((error) => {
             console.log(error);
         });
-      
-      //console.log(this.state.dataSource._dataBlob.s1);
   } 
-    
-  _filterData(){ //shouldn't be needed once integrated with REST API
-      if(this.state.viewServiceOwner != "All Service Owners"){
-          var newData = []; //will store the filtered requests to be displayed
-          var curData = this.state.dataSource._dataBlob.s1; //gets a copy of the current data stored in the ListView dataSource
-          for(var i=0; i < curData.length; ++i){ //iterates through request data
-              if(curData[i].service_owner != this.state.viewServiceOwner){
-                    continue; //doesn't meet the selected Service Owner filter criteria so skips to next request
-              }
-              newData.push(curData[i]); //this point will only be reached if the current request passed all filters, so the current request is added on to the filtered list
-          }
-          this.setState({dataSource: this.state.dataSource.cloneWithRows(newData)}); //udpates the ListView datasource
-          console.log(this.state.dataSource._dataBlob.s1);
-      }
-  }
     
   onFilterServiceOwner(serviceOwner){
       this.setState({viewServiceOwner: serviceOwner});
