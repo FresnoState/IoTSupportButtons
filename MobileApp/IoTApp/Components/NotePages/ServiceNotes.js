@@ -21,7 +21,31 @@ var NotesHeader = require('./NotesHeader.js');
 export class ServiceNotes extends Component{
     constructor(props){
         super(props);
-        this.state = {service_notes: ''};
+        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.state = {dataSource: ds, service_notes: ''};
+    }
+    
+    componentDidMount(){
+        this._getNotesData();
+    }
+    
+    componentWillReceiveProps(){
+        this._getNotesData();
+    }
+    
+    _getNotesData(){
+        var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
+        url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
+        fetch(url)
+        .then((response) => {
+            return response.json();
+        })                             
+        .then((json) => {
+            this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items)});
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
     
     onAdd(){  //handles the add services notes process
@@ -29,19 +53,32 @@ export class ServiceNotes extends Component{
             alert("Add notes");
         }
         else{
-            /*var id = { //using room, phone, and time combination as a unique identifier for the request
-                "room": this.props.requestData.room,
-                "phone": this.props.requestData.phone,
-                "time": this.props.requestData.time
-            };
-            this._addServiceNotes(getRequestIndex(id), encodeURIComponent(this.state.service_notes));*/
+            this._addNotes();
             this.props.navigator.pop(); //return to Request List
         }
     }
     
-    _addServiceNotes(id, serviceNotes){ //simulates a PUT update to a request object to only update notes
-        sampleData[id].service_notes += "%0A"+serviceNotes; //currently separating notes by the URI encoded newline character
-        console.log(sampleData[id]);
+    _addNotes(){ 
+        var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
+        url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
+        console.log(url);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'timestamp': new Date().getTime().toString(),
+                'notes': encodeURIComponent(this.state.service_notes)
+            })
+        })
+        .then((response) => {
+            console.log(response);
+        })                             
+        .catch((error) => {
+            console.log(error);
+        });
     }
     
     confirmClose(){
@@ -61,24 +98,45 @@ export class ServiceNotes extends Component{
     }
     
     onClose(){ //handles the close ticket process
-        /*var id = {  //using room, phone, and time combination as a unique identifier for the request
-            "room": this.props.requestData.room,
-            "phone": this.props.requestData.phone,
-            "time": this.props.requestData.time
-        }; 
-        this._markRequestAsServiced(getRequestIndex(id), encodeURIComponent(this.state.service_notes));*/
+        this._markRequestAsClosed();
+        this._addNotes();
         this.props.navigator.pop(); //return to Request List
     }
     
-    _markRequestAsServiced(id, serviceNotes){ //simulates a PUT update to a request object to update notes and the status to be closed
-        sampleData[id].status = 'S';
-        this._addServiceNotes(id, serviceNotes);
-        console.log(sampleData[id]);
-        alert(Dimensions.get('window').height+" "+Dimensions.get('window').width);
+    _markRequestAsClosed(){ 
+        var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/request/';
+        url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
+        console.log(url);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                'currstatus': "closed"
+            })
+        })
+        .then((response) => {
+            console.log(response);
+        })                             
+        .catch((error) => {
+            console.log(error);
+        });
     }
     
     onCancel(){ //"X" button functionality for closing out of scene
         this.props.navigator.pop();
+    }
+    
+    renderRow(rowData){
+        console.log(rowData.notes.S);
+        return (
+            <Card style={{backgroundColor: '#CCC'}}>
+                <Text style={{margin: 10}}>{decodeURIComponent(rowData.notes.S)}</Text>
+                <Text>{new Date(Number(rowData.timeStamp.S)).toString()}</Text>
+            </Card>
+        );
     }
     
     render(){
@@ -94,41 +152,18 @@ export class ServiceNotes extends Component{
                             <NotesHeader {...this.props} /> 
                         </Row>
                         <Row size={2}>
-                            <ScrollView>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>this is a note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>another note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                <Card style={{backgroundColor: '#CCC'}}>
-                                    <Text style={{margin: 10}}>one more note</Text>
-                                </Card>
-                                
-                            </ScrollView>
+                            <ListView
+                                dataSource={this.state.dataSource}
+                                renderRow={this.renderRow.bind(this)}
+                            />
                         </Row>
                         <Row size={2}>
                             <View style={{flex: 1, alignItems: 'center'}}>
                                 <Input 
                                     placeholder="Add Contact Notes Here" 
                                     style={{backgroundColor: '#EEE', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width, fontSize: fontScale}}
-                                    value={this.state.contact_notes}
-                                    onChangeText={(contact_notes) => this.setState({contact_notes})}
+                                    value={this.state.service_notes}
+                                    onChangeText={(service_notes) => this.setState({service_notes})}
                                     multiline
                                     />
                             </View>

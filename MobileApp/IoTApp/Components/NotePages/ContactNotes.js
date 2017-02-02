@@ -37,6 +37,7 @@ export class ContactNotes extends Component {
     _markRequestAsOpen() { //simulates a PUT update to a request to add notes and change the status
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/request/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
+        console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -44,7 +45,7 @@ export class ContactNotes extends Component {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                'currstatus': "new"
+                'currstatus': "open"
             })
         })
         .then((response) => {
@@ -58,6 +59,7 @@ export class ContactNotes extends Component {
     _addNotes(){
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
+        console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
