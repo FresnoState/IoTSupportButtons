@@ -142,13 +142,13 @@ export class ServiceNotes extends Component{
     render(){
         return (
             <Container>
-                <Header>
-                    <Title>Service Notes</Title>
+                <Header style={{backgroundColor: '#002C76'}}>
+                    <Title style={{color: 'white'}}>Service Notes</Title>
                     <Button2 transparent onPress={this.onCancel.bind(this)}>X</Button2>
                 </Header>
                 <View style={{flex: 1}}>
                     <Grid>
-                        <Row size={1}>
+                        <Row size={2}>
                             <NotesHeader {...this.props} /> 
                         </Row>
                         <Row size={2}>
@@ -157,7 +157,7 @@ export class ServiceNotes extends Component{
                                 renderRow={this.renderRow.bind(this)}
                             />
                         </Row>
-                        <Row size={2}>
+                        <Row size={3}>
                             <View style={{flex: 1, alignItems: 'center'}}>
                                 <Input 
                                     placeholder="Add Contact Notes Here" 

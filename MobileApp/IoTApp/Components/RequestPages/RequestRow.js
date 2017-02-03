@@ -39,7 +39,7 @@ export class RequestRow extends Component{
     }
     
     render() {
-        var rowColor = (this.props.rowID % 2) ? '#CCC' : '#AAA'; //test colors
+        var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
         /*var rowCard = (
             <View>
                 <Grid>
@@ -107,7 +107,7 @@ export class RequestRow extends Component{
                             <Row style={{margin: 5}}>
                                 <Col>
                                     <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.location.S}
+                                        {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
                                     </Text>
                                 </Col>
                             </Row>

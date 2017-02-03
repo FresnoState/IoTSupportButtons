@@ -14,19 +14,19 @@ import Dimensions from 'Dimensions';
 ////This can be in a styles.js file, like a global style sheet
 //alert(Dimensions.get('window').height+" "+Dimensions.get('window').width);
 var width = Dimensions.get('window').width;
-global.fontScale = 12;
-/*if(width > 900){
-    fontScale = 36;
-}
-else if(width > 500){
-    fontScale = 24;
-}
-else if(width > 300){
+global.fontScale; // = 12;
+if(width > 900){
     fontScale = 18;
 }
+else if(width > 500){
+    fontScale = 14;
+}
+else if(width > 300){
+    fontScale = 12;
+}
 else{
-    fontScale = 16;
-};*/
+    fontScale = 10;
+};
 
 
 //import custom scene level components
@@ -70,6 +70,7 @@ export default class iotapp extends Component {
       <Navigator
         initialRoute = {{title: 'Request List', index: 0}} //Request List is first scene
         renderScene = {this.renderScene.bind(this)}
+        configureScene = {(route, routeStack) => Navigator.SceneConfigs.FloatFromRight}
       />
     );
   }

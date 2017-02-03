@@ -86,16 +86,16 @@ export class ContactNotes extends Component {
     render(){
         return (
             <Container>
-                <Header>
-                    <Title>Contact Notes</Title>
+                <Header style={{backgroundColor: '#002C76'}}>
+                    <Title style={{color: 'white'}}>Contact Notes</Title>
                     <Button2 transparent onPress={this.onCancel.bind(this)}>x</Button2>
                 </Header>
                 <View style={{flex: 1}}>
                     <Grid>
-                        <Row size={1}>
+                        <Row size={2}>
                             <NotesHeader {...this.props} />
                         </Row>
-                        <Row size={2}>
+                        <Row size={3}>
                             <View style={{flex: 1, alignItems: 'center'}}>
                                 <Input 
                                     placeholder="Add Contact Notes Here" 
@@ -106,7 +106,7 @@ export class ContactNotes extends Component {
                                     />
                             </View>
                         </Row>
-                        <Row size={2}>
+                        {/*<Row size={2}>
                             <View style={{flex: 1}}>
                             <Picker 
                                 itemStyle={{fontSize: fontScale}}
@@ -119,7 +119,7 @@ export class ContactNotes extends Component {
                                 <Item label="Closed" value="Closed" />
                             </Picker>
                             </View>
-                        </Row>
+                        </Row>*/}
                         <Row size={1}>
                             <Button onPress={this.onSubmit.bind(this)} title="Submit" />
                         </Row>
