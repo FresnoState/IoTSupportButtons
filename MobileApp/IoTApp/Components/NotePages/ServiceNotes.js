@@ -13,12 +13,11 @@ import {
 
 import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, List, ListItem, InputGroup, Input} from 'native-base';
 import {Button as Button2} from 'native-base';
-
 import Dimensions from 'Dimensions';
 
-var NotesHeader = require('./NotesHeader.js');
+import NotesHeader from './NotesHeader.js';
 
-export class ServiceNotes extends Component{
+export default class ServiceNotes extends Component{
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -54,6 +53,7 @@ export class ServiceNotes extends Component{
         }
         else{
             this._addNotes();
+            alert("Notes Added");
             this.props.navigator.pop(); //return to Request List
         }
     }
@@ -61,7 +61,7 @@ export class ServiceNotes extends Component{
     _addNotes(){ 
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        console.log(url);
+        //console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -100,13 +100,15 @@ export class ServiceNotes extends Component{
     onClose(){ //handles the close ticket process
         this._markRequestAsClosed();
         this._addNotes();
+        this.props.updateLocalData(this.props.rowID, "closed");
+        alert("Ticket Closed");
         this.props.navigator.pop(); //return to Request List
     }
     
     _markRequestAsClosed(){ 
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/request/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        console.log(url);
+        //console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -130,7 +132,6 @@ export class ServiceNotes extends Component{
     }
     
     renderRow(rowData){
-        console.log(rowData.notes.S);
         return (
             <Card style={{backgroundColor: '#CCC'}}>
                 <Text style={{margin: 10}}>{decodeURIComponent(rowData.notes.S)}</Text>
@@ -151,7 +152,7 @@ export class ServiceNotes extends Component{
                         <Row size={2}>
                             <NotesHeader {...this.props} /> 
                         </Row>
-                        <Row size={2}>
+                        <Row size={3}>
                             <ListView
                                 dataSource={this.state.dataSource}
                                 renderRow={this.renderRow.bind(this)}
@@ -211,5 +212,3 @@ export class ServiceNotes extends Component{
         );
     }*/
 }
-
-module.exports = ServiceNotes;

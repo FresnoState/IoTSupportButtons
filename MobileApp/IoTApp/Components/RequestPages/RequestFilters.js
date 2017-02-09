@@ -9,6 +9,7 @@ import {
 
 import {Col, Row, Grid, Container, Content, Header, Title} from 'native-base';
 import {Button as Button2} from 'native-base';
+import Selection from 'react-native-selection';
 
 export class RequestFilters extends Component{
     constructor(props){
@@ -25,14 +26,35 @@ export class RequestFilters extends Component{
         this.props.navigator.pop(); 
     }
     
+    returnDataOnSelection(e){
+        console.log('Value : ' + e.value + ' Name : ' + e.name);
+      }
+    
     render() {
+         const options = [
+          {
+            name: 'All Service Owners',
+            value: 'All Service Owners',
+            icon: '',
+          },
+          {
+            name: 'DISCOVERe Hub',
+            value: 'DISCOVEReHub',
+            icon: '',
+          },
+          {
+            name: 'Library IT',
+            value: 'LibraryIT',
+            icon: '',
+          },
+        ];
         return (
             <Container>
                 <Header style={{backgroundColor: '#002C76'}}>
                     <Title style={{color: 'white'}}>Filter Requests</Title>
                     <Button2 transparent onPress={this.onCancel.bind(this)}>x</Button2>
                 </Header>
-                <Content>
+                <View style={{flex: 1}}>
                     <Text style={{fontSize: fontScale}}>Select Service Owner</Text>
                     <Picker
                         itemStyle={{fontSize: fontScale}}
@@ -44,10 +66,19 @@ export class RequestFilters extends Component{
                         <Item label="Library IT" value="LibraryIT" />
                     </Picker>
                     <Button title="Filter" onPress={this.submit.bind(this)} />
-                </Content>
+                        <Selection 
+                            title="Select Service Owner" 
+                            options={options} 
+                            onSelection={this.returnDataOnSelection.bind(this)}
+                            style={{
+                              body: null,
+                              option: null,
+                            }}
+                            iconSize={20}
+                            iconColor="#eee"
+                          />
+                </View>
             </Container>
         );
     }
 }
-
-module.exports = RequestFilters;

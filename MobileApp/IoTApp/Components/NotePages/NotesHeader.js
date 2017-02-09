@@ -9,7 +9,7 @@ import {
 
 import {Col, Row, Grid, Header, Title} from 'native-base';
 
-export class NotesHeader extends Component{
+export default class NotesHeader extends Component{
     constructor(props){
         super(props);
     }
@@ -50,5 +50,3 @@ export class NotesHeader extends Component{
         )
     }
 }
-
-module.exports = NotesHeader;

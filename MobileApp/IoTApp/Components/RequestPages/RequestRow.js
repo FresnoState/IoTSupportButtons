@@ -9,7 +9,7 @@ import {
 
 import { Col, Row, Grid, Card, CardItem} from 'native-base';
 
-export class RequestRow extends Component{
+export default class RequestRow extends Component{
     constructor(props){
         super(props);
     }
@@ -21,7 +21,9 @@ export class RequestRow extends Component{
                     title: "Contact Notes", 
                     index: 1,
                     passProps: {
-                        "requestData": this.props.requestData //passes requestData json
+                        "requestData": this.props.requestData, //passes requestData json
+                        "updateLocalData": this.props.updateLocalData,
+                        "rowID": this.props.rowID
                     }
                 });
                 break;
@@ -30,7 +32,9 @@ export class RequestRow extends Component{
                     title: "Service Notes", 
                     index: 1,
                     passProps: {
-                        "requestData": this.props.requestData    
+                        "requestData": this.props.requestData,
+                        "updateLocalData": this.props.updateLocalData,
+                        "rowID": this.props.rowID
                     }
                 });
                 break;
@@ -97,7 +101,6 @@ export class RequestRow extends Component{
             return rowCard;
         }
     */
-    
     return (
         <TouchableOpacity onPress={this.goToNotes.bind(this)}>
             <View>
@@ -147,5 +150,3 @@ export class RequestRow extends Component{
      );
    } 
 }
-
-module.exports = RequestRow;

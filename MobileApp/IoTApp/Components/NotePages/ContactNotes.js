@@ -17,7 +17,7 @@ import Dimensions from 'Dimensions';
 
 var NotesHeader = require('./NotesHeader.js');
 
-export class ContactNotes extends Component {
+export default class ContactNotes extends Component {
     constructor (props){
         super(props);
         this.state = {division: '', contact_notes: ''};
@@ -30,6 +30,8 @@ export class ContactNotes extends Component {
         else{
             this._markRequestAsOpen();
             this._addNotes();
+            this.props.updateLocalData(this.props.rowID, "open");
+            alert("Notes Added");
             this.props.navigator.pop(); //return to Request List
         }
     }
@@ -37,7 +39,7 @@ export class ContactNotes extends Component {
     _markRequestAsOpen() { //simulates a PUT update to a request to add notes and change the status
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/request/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        console.log(url);
+        //console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -59,7 +61,7 @@ export class ContactNotes extends Component {
     _addNotes(){
         var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
         url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        console.log(url);
+        //console.log(url);
         fetch(url, {
             method: 'POST',
             headers: {
@@ -129,5 +131,3 @@ export class ContactNotes extends Component {
         );
     }
 }
-
-module.exports = ContactNotes;
