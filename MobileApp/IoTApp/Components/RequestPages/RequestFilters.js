@@ -11,7 +11,7 @@ import {Col, Row, Grid, Container, Content, Header, Title} from 'native-base';
 import {Button as Button2} from 'native-base';
 import Selection from 'react-native-selection';
 
-export class RequestFilters extends Component{
+export default class RequestFilters extends Component{
     constructor(props){
         super(props);
         this.state = {selectedServiceOwner: this.props.viewServiceOwner};
@@ -66,6 +66,7 @@ export class RequestFilters extends Component{
                         <Item label="Library IT" value="LibraryIT" />
                     </Picker>
                     <Button title="Filter" onPress={this.submit.bind(this)} />
+                    {/*<Button2>
                         <Selection 
                             title="Select Service Owner" 
                             options={options} 
@@ -77,6 +78,7 @@ export class RequestFilters extends Component{
                             iconSize={20}
                             iconColor="#eee"
                           />
+                    </Button2>*/}
                 </View>
             </Container>
         );
