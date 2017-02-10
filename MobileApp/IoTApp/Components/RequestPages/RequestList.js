@@ -28,7 +28,6 @@ export default class RequestList extends Component {
   }
     
   //Commented out for testing local data updates
-    
   /*Re-fetches data when returning to this scene.
     Since the navigator is a prop, an update to the navigator (including a push to leave this page) triggers this function.
     Therefore, we check that we will be on this scene still before re-fetching data.
@@ -51,25 +50,13 @@ export default class RequestList extends Component {
             return response.json();
         })                             
         .then((json) => {
-            var sortFunc = getSortFunction(this.state.sortCol);  // = this.sortByTime;
+            var sortFunc = getSortFunction(this.state.sortCol);
             this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
         })
         .catch((error) => {
             console.log(error);
         });
   } 
-    
-  sortByTime(a, b) {
-      var time1 = a.timeStamp.S;
-      var time2 = b.timeStamp.S;
-      if(time1 < time2){
-          return 1;
-      }
-      if(time1 > time2){
-          return -1;
-      }
-      return 0;
-  };
     
   onRefresh(){
       this.setState({refreshing: true});
@@ -83,9 +70,7 @@ export default class RequestList extends Component {
   }
     
   onFilterServiceOwner(serviceOwner){
-      this.setState({viewServiceOwner: serviceOwner});
-      //call get Data
-      this._getRequestData();
+      this.setState({viewServiceOwner: serviceOwner}, this._getRequestData);
   }
     
   onSortCol(activeCol){

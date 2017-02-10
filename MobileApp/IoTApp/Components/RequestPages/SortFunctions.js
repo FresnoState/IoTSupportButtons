@@ -61,13 +61,27 @@ function sortByItem(a, b){
 function sortByStatus(a, b){
     var status1 = a.currstatus.S.toLowerCase();
     var status2 = b.currstatus.S.toLowerCase();
-    if(status1 < status2){
-        return -1
+    if(status1 == status2){
+        return 0;
     }
-    if(status1 > status2){
+    else if(status1 == 'new'){
+        return -1;
+    } 
+    else if(status2 == 'new'){
         return 1;
     }
-    return 0;
+    else if(status1 == 'open'){
+        return -1;
+    }
+    else{ //for all others sort alphabetically, most likely to be removed later
+        if(status1 < status2){
+            return -1
+        }
+        if(status1 > status2){
+            return 1;
+        }
+        return 0;
+    }
 }
 
 function sortByAction(a, b){

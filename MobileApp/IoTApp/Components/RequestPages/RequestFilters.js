@@ -26,12 +26,12 @@ export default class RequestFilters extends Component{
         this.props.navigator.pop(); 
     }
     
-    returnDataOnSelection(e){
+    /*returnDataOnSelection(e){
         console.log('Value : ' + e.value + ' Name : ' + e.name);
-      }
+    }*/
     
     render() {
-         const options = [
+        const options = [
           {
             name: 'All Service Owners',
             value: 'All Service Owners',

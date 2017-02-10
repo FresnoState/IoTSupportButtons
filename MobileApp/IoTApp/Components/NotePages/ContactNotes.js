@@ -15,7 +15,7 @@ import {Button as Button2} from 'native-base';
 
 import Dimensions from 'Dimensions';
 
-var NotesHeader = require('./NotesHeader.js');
+import NotesHeader from './NotesHeader.js';
 
 export default class ContactNotes extends Component {
     constructor (props){
