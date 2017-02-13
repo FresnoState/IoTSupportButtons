@@ -103,7 +103,7 @@ export default class RequestRow extends Component{
     */
     return (
         <TouchableOpacity onPress={this.goToNotes.bind(this)}>
-            <View>
+            
                 <Grid>
                     <Card style={{backgroundColor: rowColor}}>
                         <Row>
@@ -145,7 +145,7 @@ export default class RequestRow extends Component{
                         </Row>
                     </Card>
                 </Grid>
-            </View>
+            
         </TouchableOpacity>
      );
    } 

@@ -12,7 +12,7 @@ import {
 import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button, Icon, Footer, FooterTab} from 'native-base';
 import Selection from 'react-native-selection'
 
-import RequestRow from './RequestRow.js';
+import RequestRowContainer from './RequestRowContainer.js';
 import RequestHeader from './RequestHeader.js';
 import getSortFunction from './SortFunctions.js';
 
@@ -80,7 +80,7 @@ export default class RequestList extends Component {
     
   renderRow(rowData, sectionID, rowID){ //passed rowID for alternating row color, must be third paramter for render row function
       return (
-        <RequestRow requestData={rowData} rowID={rowID} updateLocalData={this.updateLocalData.bind(this)} navigator={this.props.navigator} />
+        <RequestRowContainer requestData={rowData} rowID={rowID} updateLocalData={this.updateLocalData.bind(this)} navigator={this.props.navigator} />
       );
   }
     
