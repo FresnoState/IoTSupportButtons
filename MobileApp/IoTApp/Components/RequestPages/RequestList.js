@@ -74,8 +74,13 @@ export default class RequestList extends Component {
   }
     
   onSortCol(activeCol){
-      this.setState({sortCol: activeCol});
-      this._getRequestData();
+      //this.setState({sortCol: activeCol});
+      //this._getRequestData();
+      var sortFunc = getSortFunction(activeCol);
+      var unsortedData = this.state.dataSource._dataBlob.s1
+      var sortedData = unsortedData.slice();
+      sortedData.sort(sortFunc);
+      this.setState({sortCol: activeCol, dataSource: this.state.dataSource.cloneWithRows(sortedData)});
   }
     
   renderRow(rowData, sectionID, rowID){ //passed rowID for alternating row color, must be third paramter for render row function
