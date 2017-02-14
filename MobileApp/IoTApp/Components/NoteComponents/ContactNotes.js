@@ -16,6 +16,8 @@ import {Button as Button2} from 'native-base';
 import Dimensions from 'Dimensions';
 
 import NotesHeader from './NotesHeader.js';
+import {addNotes} from '../../Modules/Notes.js';
+import {updateRequestStatus} from '../../Modules/Request.js';
 
 export default class ContactNotes extends Component {
     constructor (props){
@@ -28,57 +30,12 @@ export default class ContactNotes extends Component {
             alert("Select a department and add notes");
         }
         else{
-            this._markRequestAsOpen();
-            this._addNotes();
+            updateRequestStatus(this.props.requestData, "open");
+            addNotes(this.props.requestData, this.state.contact_notes);
             this.props.updateLocalData(this.props.rowID, "open");
             alert("Notes Added");
             this.props.navigator.pop(); //return to Request List
         }
-    }
-    
-    _markRequestAsOpen() { //simulates a PUT update to a request to add notes and change the status
-        var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/request/';
-        url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        //console.log(url);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'currstatus': "open"
-            })
-        })
-        .then((response) => {
-            console.log(response);
-        })                             
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    
-    _addNotes(){
-        var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/notes/';
-        url += this.props.requestData.serialNumber.S+'/'+this.props.requestData.timeStamp.S;
-        //console.log(url);
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                'timestamp': new Date().getTime().toString(),
-                'notes': encodeURIComponent(this.state.contact_notes)
-            })
-        })
-        .then((response) => {
-            console.log(response);
-        })                             
-        .catch((error) => {
-            console.log(error);
-        });
     }
     
     onCancel(){ //"X" button functionality for closing out of scene

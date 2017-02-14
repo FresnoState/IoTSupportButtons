@@ -30,10 +30,10 @@ else{
 
 
 //import custom scene level components
-import RequestList from './Components/RequestPages/RequestList.js';
-import RequestFilters from './Components/RequestPages/RequestFilters.js';
-import ContactNotes from './Components/NotePages/ContactNotes.js';
-import ServiceNotes from './Components/NotePages/ServiceNotes.js';
+import RequestList from './Components/RequestComponents/RequestList.js';
+import RequestFilters from './Components/RequestComponents/RequestFilters.js';
+import ContactNotes from './Components/NoteComponents/ContactNotes.js';
+import ServiceNotes from './Components/NoteComponents/ServiceNotes.js';
 
 
 export default class iotapp extends Component {

@@ -14,7 +14,8 @@ import Selection from 'react-native-selection'
 
 import RequestRowContainer from './RequestRowContainer.js';
 import RequestHeader from './RequestHeader.js';
-import getSortFunction from './SortFunctions.js';
+import getSortFunction from '../../Modules/SortFunctions.js';
+import {getRequests} from '../../Modules/Request.js';
 
 export default class RequestList extends Component {
   constructor(props){
@@ -39,23 +40,12 @@ export default class RequestList extends Component {
   }*/
     
   _getRequestData(){
-     //alert("fetching data");
-     var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/dashboard/';
-     if(this.state.viewServiceOwner != "All Service Owners"){
-         url += this.state.viewServiceOwner;
-         //can add check for status filter here
-     }
-     fetch(url)
-        .then((response) => {
-            return response.json();
-        })                             
-        .then((json) => {
-            var sortFunc = getSortFunction(this.state.sortCol);
-            this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+      callback = (json) => {
+          alert("Callback");
+          var sortFunc = getSortFunction(this.state.sortCol);
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
+      };
+      getRequests(this.state.viewServiceOwner, callback);
   } 
     
   onRefresh(){
