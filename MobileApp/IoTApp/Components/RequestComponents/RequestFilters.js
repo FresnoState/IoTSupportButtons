@@ -7,7 +7,7 @@ import {
   Button
 } from 'react-native';
 
-import {Col, Row, Grid, Container, Content, Header, Title} from 'native-base';
+import {Col, Row, Grid, Container, Content, Header, Title, Icon} from 'native-base';
 import {Button as Button2} from 'native-base';
 import Selection from 'react-native-selection';
 
@@ -52,7 +52,9 @@ export default class RequestFilters extends Component{
             <Container>
                 <Header style={{backgroundColor: '#002C76'}}>
                     <Title style={{color: 'white'}}>Filter Requests</Title>
-                    <Button2 transparent onPress={this.onCancel.bind(this)}>x</Button2>
+                    <Button2 transparent onPress={this.onCancel.bind(this)}>
+                        <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-close' />
+                    </Button2>
                 </Header>
                 <View style={{flex: 1}}>
                     <Text style={{fontSize: fontScale}}>Select Service Owner</Text>

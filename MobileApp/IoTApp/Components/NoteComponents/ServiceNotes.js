@@ -11,7 +11,7 @@ import {
   Navigator
 } from 'react-native';
 
-import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, List, ListItem, InputGroup, Input} from 'native-base';
+import {Col, Row, Grid, Card, Container, Content, Header, Title, Icon, Input} from 'native-base';
 import {Button as Button2} from 'native-base';
 import Dimensions from 'Dimensions';
 
@@ -84,7 +84,9 @@ export default class ServiceNotes extends Component{
             <Container>
                 <Header style={{backgroundColor: '#002C76'}}>
                     <Title style={{color: 'white'}}>Service Notes</Title>
-                    <Button2 transparent onPress={this.onCancel.bind(this)}>X</Button2>
+                    <Button2 transparent onPress={this.onCancel.bind(this)}>
+                        <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-close' />
+                    </Button2>
                 </Header>
                 <View style={{flex: 1}}>
                     <Grid>

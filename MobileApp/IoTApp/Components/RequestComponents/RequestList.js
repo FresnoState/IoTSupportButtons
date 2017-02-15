@@ -41,7 +41,6 @@ export default class RequestList extends Component {
     
   _getRequestData(){
       callback = (json) => {
-          alert("Callback");
           var sortFunc = getSortFunction(this.state.sortCol);
           this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
       };
@@ -117,13 +116,14 @@ export default class RequestList extends Component {
             icon: '',
           },
         ];
+      //md-funnel
       return (
         <Container style={{backgroundColor: '#F5FCFF'}}>
             <Header style={{backgroundColor: '#002C76'}}>
                 <Title style={{color: 'white'}}>Service Requests</Title>
                 <Button transparent>{''}</Button>
                 <Button transparent onPress={this.goToFilters.bind(this)}>
-                    <Icon style={{fontSize: fontScale+10, color: 'white'}} name='md-funnel' />
+                    <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-funnel' />
                 </Button>
                 {/*<Button>
                     <Selection 

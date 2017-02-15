@@ -1,5 +1,5 @@
 export function getRequests(viewServiceOwner, callback){
-    alert("fetching data");
+    //alert("fetching data");
     var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/dashboard/';
     if(viewServiceOwner != "All Service Owners"){
      url += viewServiceOwner;
