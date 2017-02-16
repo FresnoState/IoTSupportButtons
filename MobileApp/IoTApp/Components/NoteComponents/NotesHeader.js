@@ -16,7 +16,7 @@ export default class NotesHeader extends Component{
     
     render(){
         return(
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, margin: 10}}>
                 <Grid>
                     <Row>
                         <Col>

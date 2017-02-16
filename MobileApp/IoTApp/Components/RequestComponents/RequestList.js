@@ -21,7 +21,7 @@ export default class RequestList extends Component {
   constructor(props){
       super(props);
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {dataSource: ds, refreshing: false, viewServiceOwner: "All Service Owners", sortCol: 'time'};
+      this.state = {dataSource: ds, refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "All Statuses", sortCol: 'time'};
   }
     
   componentDidMount(){
@@ -44,7 +44,7 @@ export default class RequestList extends Component {
           var sortFunc = getSortFunction(this.state.sortCol);
           this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
       };
-      getRequests(this.state.viewServiceOwner, callback);
+      getRequests(this.state.viewServiceOwner, this.state.viewStatus, callback);
   } 
     
   onRefresh(){
@@ -58,8 +58,8 @@ export default class RequestList extends Component {
       this.setState({refreshing: false}); 
   }
     
-  onFilterServiceOwner(serviceOwner){
-      this.setState({viewServiceOwner: serviceOwner}, this._getRequestData);
+  onFilterServiceOwner(serviceOwner, status){
+      this.setState({viewServiceOwner: serviceOwner, viewStatus: status}, this._getRequestData);
   }
     
   onSortCol(activeCol){
@@ -84,6 +84,7 @@ export default class RequestList extends Component {
          index: 1,
          passProps: {
              "viewServiceOwner": this.state.viewServiceOwner,
+             "viewStatus": this.state.viewStatus,
              "onFilterServiceOwner": this.onFilterServiceOwner.bind(this)
          }
       });
