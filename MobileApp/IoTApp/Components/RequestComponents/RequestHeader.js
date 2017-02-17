@@ -19,7 +19,23 @@ export default class RequestHeader extends Component{
         this.props.onSortCol(col);
     }
     
+    renderDescCol(){
+        if(is_iPad){
+            return (
+                <View style={styles.inactive}>
+                    <Text style={{fontSize: fontScale}}>
+                            Description
+                        </Text>
+                </View>
+            );
+        }
+        else{
+            return null;
+        }
+    }
+    
     render(){
+        var descCol = this.renderDescCol();
         return (
             <View style={{flex: 1, marginTop: 10, marginBottom: 5}}>
             <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#FFF'}, styles.inactive}>
@@ -63,6 +79,7 @@ export default class RequestHeader extends Component{
                                 Status
                             </Text>
                     </TouchableOpacity>
+                    {descCol}
                 </View>
             </View>
         );

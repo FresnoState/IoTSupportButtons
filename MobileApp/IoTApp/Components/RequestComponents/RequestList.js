@@ -21,7 +21,7 @@ export default class RequestList extends Component {
   constructor(props){
       super(props);
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {dataSource: ds, refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "All Statuses", sortCol: 'time'};
+      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "All Statuses", sortCol: 'time'};
   }
     
   componentDidMount(){

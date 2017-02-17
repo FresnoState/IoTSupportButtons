@@ -28,6 +28,7 @@ else{
     fontScale = 10;
 };
 
+global.is_iPad = (width >= 768);
 
 //import custom scene level components
 import RequestList from './Components/RequestComponents/RequestList.js';
