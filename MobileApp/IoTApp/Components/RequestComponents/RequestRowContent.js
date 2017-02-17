@@ -14,103 +14,41 @@ export default class RequestRowContent extends Component{
     
     render() {
         var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
-        if(is_iPad){
-            return (
-                <Grid>
-                    <Card style={{backgroundColor: rowColor}}>
-                        <Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.item.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.action.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.currstatus.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.description.S}
-                                    </Text>
-                                </Col>
-                            </Row>
+        return (
+            <Grid>
+                <Card style={{backgroundColor: rowColor}}>
+                    <Row>
+                        <Row style={{margin: 5}}>
+                            <Col>
+                                <Text style={{fontSize: fontScale}}>
+                                    {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
+                                </Text>
+                            </Col>
                         </Row>
-                    </Card>
-                </Grid>
-            );
-        }
-        else{
-            return (
-                <Grid>
-                    <Card style={{backgroundColor: rowColor}}>
-                        <Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.item.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.action.S}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
-                                    </Text>
-                                </Col>
-                            </Row>
-                            <Row style={{margin: 5}}>
-                                <Col>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {this.props.requestData.currstatus.S}
-                                    </Text>
-                                </Col>
-                            </Row>
+                        <Row style={{margin: 5}}>
+                            <Col>
+                                <Text style={{fontSize: fontScale}}>
+                                    {this.props.requestData.item.S}
+                                </Text>
+                            </Col>
                         </Row>
-                    </Card>
-                </Grid>
-            );
-        }
-        
+                        <Row style={{margin: 5}}>
+                            <Col>
+                                <Text style={{fontSize: fontScale}}>
+                                    {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
+                                </Text>
+                            </Col>
+                        </Row>
+                        <Row style={{margin: 5}}>
+                            <Col>
+                                <Text style={{fontSize: fontScale}}>
+                                    {this.props.requestData.currstatus.S}
+                                </Text>
+                            </Col>
+                        </Row>
+                    </Row>
+                </Card>
+            </Grid>
+        );
     }
 }

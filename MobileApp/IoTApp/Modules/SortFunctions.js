@@ -12,9 +12,6 @@ export default function getSortFunction(activeCol){
         case 'status':
             return sortByStatus;
             break;
-        case 'action':
-            return sortByAction;
-            break;
         default:
             return sortByTime;
             break;
@@ -84,16 +81,5 @@ function sortByStatus(a, b){
     }
 }
 
-function sortByAction(a, b){
-    var action1 = a.action.S.toLowerCase();
-    var action2 = b.action.S.toLowerCase();
-    if(action1 < action2){
-        return -1
-    }
-    if(action1 > action2){
-        return 1;
-    }
-    return 0;
-}
 
 
