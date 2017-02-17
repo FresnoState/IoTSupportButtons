@@ -36,7 +36,7 @@ export default class ServiceNotes extends Component{
             alert("Add notes");
         }
         else{
-            this._addNotes();
+            addNotes(this.props.requestData, this.state.service_notes);
             alert("Notes Added");
             this.props.navigator.pop(); //return to Request List
         }
