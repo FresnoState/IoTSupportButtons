@@ -22,6 +22,14 @@ export default class RequestHeader extends Component{
             <View style={{flex: 1, marginTop: 10, marginBottom: 5}}>
             <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#FFF'}, styles.inactive}>
                     <TouchableOpacity 
+                        style={this.props.sortCol == 'time' ? styles.active : styles.inactive} 
+                        onPress={() => this.setActive('time')}
+                    >
+                            <Text style={{fontSize: fontScale}}>
+                                Time
+                            </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
                         style={this.props.sortCol == 'location' ? styles.active : styles.inactive} 
                         onPress={() => this.setActive('location')}
                     >
@@ -35,14 +43,6 @@ export default class RequestHeader extends Component{
                     >
                             <Text style={{fontSize: fontScale}}>
                                 Item
-                            </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity 
-                        style={this.props.sortCol == 'time' ? styles.active : styles.inactive} 
-                        onPress={() => this.setActive('time')}
-                    >
-                            <Text style={{fontSize: fontScale}}>
-                                Time
                             </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 

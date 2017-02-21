@@ -3,7 +3,7 @@ export function getRequests(viewServiceOwner, viewStatus, callback){
     var url = 'https://aa0zsc2r3j.execute-api.us-west-2.amazonaws.com/Pilot_2173/dashboard/';
     if(viewServiceOwner != "All Service Owners"){
         url += viewServiceOwner;
-        if(viewStatus != "All Statuses"){
+        if(viewStatus != "All Statuses" && viewStatus != "New/Open"){
             url += "/"+viewStatus;
         }
     }

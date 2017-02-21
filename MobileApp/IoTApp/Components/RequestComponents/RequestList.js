@@ -21,7 +21,7 @@ export default class RequestList extends Component {
   constructor(props){
       super(props);
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "All Statuses", sortCol: 'time'};
+      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "New/Open", sortCol: 'time'};
   }
     
   componentDidMount(){
@@ -42,10 +42,26 @@ export default class RequestList extends Component {
   _getRequestData(){
       callback = (json) => {
           var sortFunc = getSortFunction(this.state.sortCol);
-          this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))});
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))}, () => {
+              if(this.state.viewStatus == "New/Open"){
+                this._filterOutClosedRequests();
+              }
+          });
       };
       getRequests(this.state.viewServiceOwner, this.state.viewStatus, callback);
+      console.log(this.state.viewStatus);
   } 
+    
+  _filterOutClosedRequests(){
+      var unfilteredData = this.state.dataSource._dataBlob.s1;
+      var filteredData = [];
+      for(var i=0; i<unfilteredData.length; ++i){
+          if(unfilteredData[i].currstatus.S == "new" || unfilteredData[i].currstatus.S == "open"){
+              filteredData.push(unfilteredData[i]);
+          }
+      }
+      this.setState({dataSource: this.state.dataSource.cloneWithRows(filteredData)});
+  }
     
   onRefresh(){
       this.setState({refreshing: true});
@@ -58,7 +74,7 @@ export default class RequestList extends Component {
       this.setState({refreshing: false}); 
   }
     
-  onFilterServiceOwner(serviceOwner, status){
+  onFilter(serviceOwner, status){
       this.setState({viewServiceOwner: serviceOwner, viewStatus: status}, this._getRequestData);
   }
     
@@ -85,7 +101,7 @@ export default class RequestList extends Component {
          passProps: {
              "viewServiceOwner": this.state.viewServiceOwner,
              "viewStatus": this.state.viewStatus,
-             "onFilterServiceOwner": this.onFilterServiceOwner.bind(this)
+             "onFilter": this.onFilter.bind(this)
          }
       });
   }

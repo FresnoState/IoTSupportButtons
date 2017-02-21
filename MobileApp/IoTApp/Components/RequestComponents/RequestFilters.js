@@ -24,14 +24,14 @@ export default class RequestFilters extends Component{
     }
     
     onServiceOwnerChange(serviceOwner){
-        if(serviceOwner == "All Service Owners"){
+        if(serviceOwner == "All Service Owners" && this.state.selectedStatus != "New/Open"){
             this.setState({selectedStatus: "All Statuses"});
         }
         this.setState({selectedServiceOwner: serviceOwner});
     }
     
     onStatusChange(status){
-        if(this.state.selectedServiceOwner == "All Service Owners"){
+        if(this.state.selectedServiceOwner == "All Service Owners" && status != "New/Open"){
             this.setState({selectedStatus: "All Statuses"});
         }
         else{
@@ -44,7 +44,7 @@ export default class RequestFilters extends Component{
     }
     
     submit(){
-        this.props.onFilterServiceOwner(this.state.selectedServiceOwner, this.state.selectedStatus);
+        this.props.onFilter(this.state.selectedServiceOwner, this.state.selectedStatus);
         this.props.navigator.pop(); 
     }
     
@@ -89,7 +89,7 @@ export default class RequestFilters extends Component{
                         selectedValue={this.state.selectedServiceOwner}
                         onValueChange={this.onServiceOwnerChange.bind(this)}
                     >
-                        <Item label="All Service Owners" value="All Service Owners" />
+                        <Item label="All" value="All Service Owners" />
                         <Item label="DISCOVERe Hub" value="DISCOVEReHub" />
                         <Item label="Library IT" value="LibraryIT" />
                     </Picker>
@@ -99,7 +99,8 @@ export default class RequestFilters extends Component{
                         selectedValue={this.state.selectedStatus}
                         onValueChange={this.onStatusChange.bind(this)}
                     >
-                        <Item label="All Statuses" value="All Statuses" />
+                        <Item label="All" value="All Statuses" />
+                        <Item label="New/Open" value="New/Open" />
                         <Item label="New" value="new" />
                         <Item label="Open" value="open" />
                         <Item label="Closed" value="closed" />

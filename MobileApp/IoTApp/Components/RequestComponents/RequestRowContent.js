@@ -21,6 +21,13 @@ export default class RequestRowContent extends Component{
                         <Row style={{margin: 5}}>
                             <Col>
                                 <Text style={{fontSize: fontScale}}>
+                                    {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
+                                </Text>
+                            </Col>
+                        </Row>
+                        <Row style={{margin: 5}}>
+                            <Col>
+                                <Text style={{fontSize: fontScale}}>
                                     {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
                                 </Text>
                             </Col>
@@ -29,13 +36,6 @@ export default class RequestRowContent extends Component{
                             <Col>
                                 <Text style={{fontSize: fontScale}}>
                                     {this.props.requestData.item.S}
-                                </Text>
-                            </Col>
-                        </Row>
-                        <Row style={{margin: 5}}>
-                            <Col>
-                                <Text style={{fontSize: fontScale}}>
-                                    {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
                                 </Text>
                             </Col>
                         </Row>
