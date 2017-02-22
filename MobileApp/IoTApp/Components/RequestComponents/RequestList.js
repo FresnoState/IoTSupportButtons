@@ -49,7 +49,6 @@ export default class RequestList extends Component {
           });
       };
       getRequests(this.state.viewServiceOwner, this.state.viewStatus, callback);
-      console.log(this.state.viewStatus);
   } 
     
   _filterOutClosedRequests(){

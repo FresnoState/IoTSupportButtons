@@ -14,31 +14,17 @@ export default class RequestRowContainer extends Component{
         super(props);
     }
     
-    goToNotes(){ //navigates to appropriate note form scene while passing the request Data as props
-        switch(this.props.requestData.currstatus.S){
-            case 'new':
-                this.props.navigator.push({
-                    title: "Contact Notes", 
-                    index: 1,
-                    passProps: {
-                        "requestData": this.props.requestData, //passes requestData json
-                        "updateLocalData": this.props.updateLocalData,
-                        "rowID": this.props.rowID
-                    }
-                });
-                break;
-            case 'open':
-                this.props.navigator.push({
-                    title: "Service Notes", 
-                    index: 1,
-                    passProps: {
-                        "requestData": this.props.requestData,
-                        "updateLocalData": this.props.updateLocalData,
-                        "rowID": this.props.rowID
-                    }
-                });
-                break;
-        }
+    goToNotes(){ //navigates to notes form, passing the request data
+        this.props.navigator.push({
+            title: "Notes", 
+            index: 1,
+            passProps: {
+                "requestData": this.props.requestData,
+                "updateLocalData": this.props.updateLocalData,
+                "rowID": this.props.rowID
+            }
+        });
+        
     }
     
     render() {
@@ -47,7 +33,6 @@ export default class RequestRowContainer extends Component{
             return (
                 <TouchableOpacity onPress={this.goToNotes.bind(this)}>
                     <RequestRowContent {...this.props} />
-                    {/*<Text>Touch Test</Text>*/}
                 </TouchableOpacity>
             );
         }
@@ -55,7 +40,6 @@ export default class RequestRowContainer extends Component{
             return (
                 <View>
                     <RequestRowContent {...this.props} />
-                    {/*<Text>Non-Touch Test</Text>*/}
                 </View>
             );
         }
