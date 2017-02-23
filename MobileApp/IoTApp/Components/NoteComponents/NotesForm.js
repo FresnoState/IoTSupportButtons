@@ -19,7 +19,7 @@ import NotesHeader from './NotesHeader.js';
 import {getNotes, addNotes} from '../../Modules/Notes.js';
 import {updateRequestStatus} from '../../Modules/Request.js';
 
-export default class ServiceNotes extends Component{
+export default class NotesForm extends Component{
     constructor(props){
         super(props);
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -75,10 +75,12 @@ export default class ServiceNotes extends Component{
     }
     
     renderRow(rowData){
+        var timestamp = new Date(Number(rowData.timeStamp.S));
+        var options = {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"};
         return (
             <Card style={{backgroundColor: '#CCC'}}>
                 <Text style={{margin: 10}}>{decodeURIComponent(rowData.notes.S)}</Text>
-                <Text>{new Date(Number(rowData.timeStamp.S)).toString()}</Text>
+                <Text>{timestamp.toLocaleString("en-us", options)}</Text>
             </Card>
         );
     }

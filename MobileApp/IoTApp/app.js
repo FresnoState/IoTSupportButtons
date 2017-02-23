@@ -31,7 +31,7 @@ else{
 //import custom scene level components
 import RequestList from './Components/RequestComponents/RequestList.js';
 import RequestFilters from './Components/RequestComponents/RequestFilters.js';
-import Notes from './Components/NoteComponents/Notes.js';
+import NotesForm from './Components/NoteComponents/NotesForm.js';
 
 export default class iotapp extends Component {
   constructor(props){
@@ -49,9 +49,9 @@ export default class iotapp extends Component {
               return (
                   <RequestFilters navigator={navigator} {...route.passProps} />
               );
-          case "Notes":
+          case "Notes Form":
               return (
-                <Notes navigator={navigator} {...route.passProps} />
+                <NotesForm navigator={navigator} {...route.passProps} />
               );
               break;
       }

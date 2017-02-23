@@ -16,7 +16,7 @@ export default class RequestRowContainer extends Component{
     
     goToNotes(){ //navigates to notes form, passing the request data
         this.props.navigator.push({
-            title: "Notes", 
+            title: "Notes Form", 
             index: 1,
             passProps: {
                 "requestData": this.props.requestData,

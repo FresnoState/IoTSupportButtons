@@ -14,15 +14,23 @@ export default class RequestRowContent extends Component{
     
     render() {
         var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
+        var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
         return (
             <Grid>
                 <Card style={{backgroundColor: rowColor}}>
                     <Row>
                         <Row style={{margin: 5}}>
                             <Col>
-                                <Text style={{fontSize: fontScale}}>
-                                    {new Date(Number(this.props.requestData.timeStamp.S)).toString()}
-                                </Text>
+                                <Row>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {timestamp.toLocaleDateString("en-us")}
+                                    </Text>
+                                </Row>
+                                <Row>
+                                    <Text style={{fontSize: fontScale}}>
+                                        {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
+                                    </Text> 
+                                </Row>
                             </Col>
                         </Row>
                         <Row style={{margin: 5}}>
