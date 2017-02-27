@@ -9,13 +9,6 @@ import {
 
 import {Col, Row, Grid, Container, Content, Header, Title, Icon} from 'native-base';
 import {Button as Button2} from 'native-base';
-import Selection from 'react-native-selection';
-import ModalDropdown from 'react-native-modal-dropdown';
-import DropDown, {
-  Select,
-  Option,
-  OptionList,
-} from 'react-native-selectme';
 
 export default class RequestFilters extends Component{
     constructor(props){
@@ -24,14 +17,14 @@ export default class RequestFilters extends Component{
     }
     
     onServiceOwnerChange(serviceOwner){
-        if(serviceOwner == "All Service Owners" && this.state.selectedStatus != "New/Open"){
+        if(serviceOwner == "All Service Owners" && !(this.state.selectedStatus == "New/Open" || this.state.selectedStatus == "All")){
             this.setState({selectedStatus: "All Statuses"});
         }
         this.setState({selectedServiceOwner: serviceOwner});
     }
     
     onStatusChange(status){
-        if(this.state.selectedServiceOwner == "All Service Owners" && status != "New/Open"){
+        if(this.state.selectedServiceOwner == "All Service Owners" && !(status == "New/Open" || status == "All")){
             this.setState({selectedStatus: "All Statuses"});
         }
         else{
@@ -48,38 +41,13 @@ export default class RequestFilters extends Component{
         this.props.navigator.pop(); 
     }
     
-    /*returnDataOnSelection(e){
-        console.log('Value : ' + e.value + ' Name : ' + e.name);
-    }
-    
-    _getOptionList() {
-        return this.refs['OPTIONLIST'];
-    }*/
-    
     render() {
-        /*const options = [
-          {
-            name: 'All Service Owners',
-            value: 'All Service Owners',
-            icon: '',
-          },
-          {
-            name: 'DISCOVERe Hub',
-            value: 'DISCOVEReHub',
-            icon: '',
-          },
-          {
-            name: 'Library IT',
-            value: 'LibraryIT',
-            icon: '',
-          },
-        ];*/
         return (
             <Container>
                 <Header style={{backgroundColor: '#002C76'}}>
                     <Title style={{color: 'white'}}>Filter Requests</Title>
                     <Button2 transparent onPress={this.onCancel.bind(this)}>
-                        <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-close' />
+                        <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-arrow-back' />
                     </Button2>
                 </Header>
                 <View style={{flex: 1}}>
@@ -106,30 +74,6 @@ export default class RequestFilters extends Component{
                         <Item label="Closed" value="closed" />
                     </Picker>
                     <Button title="Filter" onPress={this.submit.bind(this)} />
-                    {/*<ModalDropdown style={{flex: 1}}
-                        options={['DISCOVERe Hub', 'Library IT']}
-                    />
-                    <Button2>
-                        <Selection 
-                            title="Select Service Owner" 
-                            options={options} 
-                            onSelection={this.returnDataOnSelection.bind(this)}
-                            style={{
-                              body: null,
-                              option: null,
-                            }}
-                          />
-                    </Button2>
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <Select
-                            width={250}
-                            optionListRef={this._getOptionList.bind(this)}
-                        >
-                            <Option>DISCOVERe Hub</Option>
-                            <Option>Library ID</Option>
-                        </Select>
-                    </View>
-                    <OptionList ref="OPTIONLIST"/>*/}
                 </View>
             </Container>
         );
