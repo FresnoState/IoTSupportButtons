@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button, Icon, Footer, FooterTab} from 'native-base';
-import Selection from 'react-native-selection'
 
 import RequestRowContainer from './RequestRowContainer.js';
 import RequestHeader from './RequestHeader.js';
@@ -26,6 +25,7 @@ export default class RequestList extends Component {
     
   componentDidMount(){
       this._getRequestData();
+      var reloadInterval = setInterval(this.onRefresh.bind(this), 60000); //for auto reloading data, currently set to every minute
   }
     
   //Commented out for testing local data updates
@@ -111,28 +111,9 @@ export default class RequestList extends Component {
       updatedData[rowID] = {...oldData[rowID]};
       updatedData[rowID].currstatus.S = status;
       this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
-      //console.log(this.state.dataSource._dataBlob.s1);
   }
     
   render() {
-      const options = [
-          {
-            name: 'All Service Owners',
-            value: 'All Service Owners',
-            icon: '',
-          },
-          {
-            name: 'DISCOVERe Hub',
-            value: 'DISCOVEReHub',
-            icon: '',
-          },
-          {
-            name: 'Library IT',
-            value: 'LibraryIT',
-            icon: '',
-          },
-        ];
-      //md-funnel
       return (
         <Container style={{backgroundColor: '#F5FCFF'}}>
             <Header style={{backgroundColor: '#002C76'}}>
@@ -141,24 +122,11 @@ export default class RequestList extends Component {
                 <Button transparent onPress={this.goToFilters.bind(this)}>
                     <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-funnel' />
                 </Button>
-                {/*<Button>
-                    <Selection 
-                        title="Service Owner" 
-                        options={options} 
-                        onSelection={(e) => console.log(e)}
-                        style={{
-                          body: null,
-                          option: null,
-                        }}
-                        iconSize={20}
-                        iconColor="#eee"
-                      />
-                </Button>*/}
             </Header>
             <View style={{flex: 1}}>
                 <RequestHeader sortCol={this.state.sortCol} onSortCol={this.onSortCol.bind(this)} />
             </View>
-            <View style={{flex: 10}}>
+            <View style={{flex: 15}}>{/*, margin: 10, marginBottom: 0}}>*/}
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
