@@ -7,7 +7,7 @@ export function getNotes(requestData, callback){
     }) 
     .then((json) => callback(json))
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }
 
@@ -25,10 +25,10 @@ export function addNotes(requestData, notes){
             'notes': encodeURIComponent(notes)
         })
     })
-    .then((response) => {
+    /*.then((response) => {
         console.log(response);
-    })                             
+    })*/                             
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }

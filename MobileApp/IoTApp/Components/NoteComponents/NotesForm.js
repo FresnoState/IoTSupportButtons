@@ -7,15 +7,14 @@ import {
   ScrollView,
   ListView,
   View,
-  Button,
   Navigator
 } from 'react-native';
 
-import {Col, Row, Grid, Card, Container, Content, Header, Title, Icon, Input} from 'native-base';
-import {Button as Button2} from 'native-base';
+import {Col, Row, Grid, Card, Container, Content, Header, Title, Icon, Input, Button} from 'native-base';
 import Dimensions from 'Dimensions';
 
 import NotesHeader from './NotesHeader.js';
+import NotesButtons from './NotesButtons.js';
 import {getNotes, addNotes} from '../../Modules/Notes.js';
 import {updateRequestStatus} from '../../Modules/Request.js';
 
@@ -86,42 +85,48 @@ export default class NotesForm extends Component{
     }
     
     render(){
+        //conditional rendering for open/closed notes, probably will reorganize later
+        var buttons = this.props.requestData.currstatus.S == "closed" ? (<View></View>) : (
+            <Row size={1}>
+                <NotesButtons onAdd={this.onAdd.bind(this)} confirmClose={this.confirmClose.bind(this)} />
+            </Row>
+        );
+        var notes = this.props.requestData.currstatus.S == "closed" ? (<View></View>) : (
+            <Row size={3}>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                    <Input 
+                        placeholder="Add Notes Here" 
+                        style={{backgroundColor: '#CCC', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width-20, fontSize: fontScale}}
+                        value={this.state.notes}
+                        onChangeText={(notes) => this.setState({notes})}
+                        multiline
+                        />
+                </View>
+            </Row>
+        );
+        var oldNotesSize = this.props.requestData.currstatus.S == "closed" ? 7 : 3;
         return (
             <Container>
                 <Header style={{backgroundColor: '#002C76'}}>
-                    <Title style={{color: 'white'}}>Notes</Title>
-                    <Button2 transparent onPress={this.onCancel.bind(this)}>
-                        <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-close' />
-                    </Button2>
+                    <Title style={styles.headerTitle}>SERVICE NOTES</Title>
+                    <Button transparent onPress={this.onCancel.bind(this)}>
+                        <Icon style={styles.headerIcon} name='ios-arrow-back' />
+                    </Button>
                 </Header>
-                <View style={{flex: 1}}>
+                <View style={{flex: 1, margin: 10}}>
                     <Grid>
                         <Row size={2}>
                             <NotesHeader {...this.props} /> 
                         </Row>
-                        <Row size={3}>
+                        <Row size={oldNotesSize} style={{backgroundColor: '#f8f8f8', marginBottom: 10}}>
                             <ListView
                                 dataSource={this.state.dataSource}
                                 renderRow={this.renderRow.bind(this)}
                             />
                         </Row>
-                        <Row size={3}>
-                            <View style={{flex: 1, alignItems: 'center'}}>
-                                <Input 
-                                    placeholder="Add Notes Here" 
-                                    style={{backgroundColor: '#EEE', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width, fontSize: fontScale}}
-                                    value={this.state.notes}
-                                    onChangeText={(notes) => this.setState({notes})}
-                                    multiline
-                                    />
-                            </View>
-                        </Row>
-                        <Row size={1}>
-                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                                <Button onPress={this.onAdd.bind(this)} title="Add" />
-                                <Button onPress={this.confirmClose.bind(this)} title="Close" />
-                            </View>
-                        </Row>
+                        {/*() => {if(this.props.requestData.currstatus.S != "closed") return notes;} */}
+                        {notes}
+                        {buttons}
                     </Grid>
                 </View>
             </Container>

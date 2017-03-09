@@ -6,7 +6,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import {Col, Row, Grid} from 'native-base';
+import {Col, Row, Grid, Icon} from 'native-base';
 
 export default class RequestHeader extends Component{
     constructor(props){
@@ -19,18 +19,19 @@ export default class RequestHeader extends Component{
     
     render(){
         return (
-            <View style={{flex: 1, marginTop: 10, marginBottom: 5}}>
-            <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#FFF'}, styles.inactive}>
+            <View style={{flex: 1, margin: 10, marginBottom: 0}}>
+            <View style={{flex: 1, flexDirection: 'row'}}>
                     <TouchableOpacity 
-                        style={this.props.sortCol == 'time' ? styles.active : styles.inactive} 
+                        style={this.props.sortCol == 'time' ? styles.activeSortCol : styles.inactiveSortCol}
                         onPress={() => this.setActive('time')}
                     >
                             <Text style={{fontSize: fontScale}}>
                                 Time
                             </Text>
+                            {/*<Icon style={{fontSize: fontScale*2}} name='ios-arrow-down' />*/}
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={this.props.sortCol == 'location' ? styles.active : styles.inactive} 
+                        style={this.props.sortCol == 'location' ? styles.activeSortCol : styles.inactiveSortCol} 
                         onPress={() => this.setActive('location')}
                     >
                             <Text style={{fontSize: fontScale}}>
@@ -38,7 +39,7 @@ export default class RequestHeader extends Component{
                             </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={this.props.sortCol == 'item' ? styles.active : styles.inactive} 
+                        style={this.props.sortCol == 'item' ? styles.activeSortCol : styles.inactiveSortCol} 
                         onPress={() => this.setActive('item')}
                     >
                             <Text style={{fontSize: fontScale}}>
@@ -46,7 +47,7 @@ export default class RequestHeader extends Component{
                             </Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={this.props.sortCol == 'status' ? styles.active : styles.inactive} 
+                        style={this.props.sortCol == 'status' ? styles.activeSortCol : styles.inactiveSortCol} 
                         onPress={() => this.setActive('status')}
                     >
                             <Text style={{fontSize: fontScale}}>
@@ -59,19 +60,3 @@ export default class RequestHeader extends Component{
     }
 }
 
-styles = StyleSheet.create({
-  active: {
-    flex: 1,
-    flexDirection: 'row',
-    borderColor: '#d4d4de',
-    borderWidth: 0.5,
-    backgroundColor: '#d0d0db',
-  },
-  inactive: {
-    flex: 1,
-    flexDirection: 'row',
-    borderColor: '#d4d4de',
-    borderWidth: 0.5,
-    backgroundColor: '#FFF',
-  },
-});

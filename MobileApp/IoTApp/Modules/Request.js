@@ -13,7 +13,7 @@ export function getRequests(viewServiceOwner, viewStatus, callback){
     })                             
     .then((json) => callback(json))
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }
 
@@ -30,10 +30,10 @@ export function updateRequestStatus(requestData, status){
             'currstatus': status
         })
     })
-    .then((response) => {
+    /*.then((response) => {
         console.log(response);
-    })                             
+    })*/                             
     .catch((error) => {
-        console.log(error);
+        //console.log(error);
     });
 }

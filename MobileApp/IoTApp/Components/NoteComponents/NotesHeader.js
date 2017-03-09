@@ -15,6 +15,8 @@ export default class NotesHeader extends Component{
     }
     
     render(){
+        var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
+        var options = {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"};
         return(
             <View style={{flex: 1, margin: 10}}>
                 <Grid>
@@ -31,7 +33,7 @@ export default class NotesHeader extends Component{
                             <Text style={{fontSize: fontScale}}>Action: {this.props.requestData.action.S}</Text>
                         </Col>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Time: {new Date(Number(this.props.requestData.timeStamp.S)).toString()}</Text>
+                            <Text style={{fontSize: fontScale}}>Time: {timestamp.toLocaleString("en-us", options)}</Text>
                         </Col>
                     </Row>
                     <Row>

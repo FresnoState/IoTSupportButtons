@@ -7,7 +7,10 @@ import {
   Navigator
 } from 'react-native';
 
+import {Button, Icon} from 'native-base';
+
 import RequestRowContent from './RequestRowContent.js';
+import Dimensions from 'Dimensions';
 
 export default class RequestRowContainer extends Component{
     constructor(props){
@@ -27,21 +30,42 @@ export default class RequestRowContainer extends Component{
         
     }
     
+    getButton(){
+        switch(this.props.requestData.currstatus.S){
+            case "new":
+                return (
+                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'red'}}>
+                        <Text style={{fontSize: fontScale*2, color: 'white', fontWeight: 'bold'}}>!</Text>
+                    </Button>
+                );
+                break;
+            case "open":
+                return (
+                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'orange'}}>
+                        <Icon style={{fontSize: fontScale*2}} name='ios-arrow-forward' />
+                    </Button>
+                );
+                break;
+            case "closed":
+                return (
+                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'black'}}>
+                        <Text style={{fontSize: fontScale*2, color: 'white', fontWeight: 'bold'}}>|</Text>
+                    </Button>
+                );
+                break;
+        }
+    }
+    
     render() {
-        var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
-        if(this.props.requestData.currstatus.S == "new" || this.props.requestData.currstatus.S == "open"){
-            return (
-                <TouchableOpacity onPress={this.goToNotes.bind(this)}>
-                    <RequestRowContent {...this.props} />
-                </TouchableOpacity>
-            );
-        }
-        else{
-            return (
-                <View>
-                    <RequestRowContent {...this.props} />
-                </View>
-            );
-        }
+        var button = this.getButton();
+        return (
+            <TouchableOpacity style={styles.requestRowContainer} onPress={this.goToNotes.bind(this)}>
+                <RequestRowContent {...this.props} />
+                {button}
+                {/*<TouchableOpacity style={{backgroundColor: 'blue', shadowColor: 'gray', shadowOpacity: 5,borderRadius: 10, padding: 10, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.7}}>
+                    <Icon style={{fontSize: fontScale*2, color: 'white'}} name='ios-arrow-forward' />
+                </TouchableOpacity>*/}
+            </TouchableOpacity>
+        );
     }
 }

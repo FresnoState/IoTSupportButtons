@@ -11,6 +11,7 @@ import {
 
 import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button, Icon, Footer, FooterTab} from 'native-base';
 
+import styles from '../../Styles.js';
 import RequestRowContainer from './RequestRowContainer.js';
 import RequestHeader from './RequestHeader.js';
 import getSortFunction from '../../Modules/SortFunctions.js';
@@ -25,7 +26,7 @@ export default class RequestList extends Component {
     
   componentDidMount(){
       this._getRequestData();
-      var reloadInterval = setInterval(this.onRefresh.bind(this), 60000); //for auto reloading data, currently set to every minute
+      var reloadInterval = setInterval(this.onRefresh.bind(this), 300000); //for auto reloading data, currently set to every minute
   }
     
   //Commented out for testing local data updates
@@ -117,10 +118,10 @@ export default class RequestList extends Component {
       return (
         <Container style={{backgroundColor: '#F5FCFF'}}>
             <Header style={{backgroundColor: '#002C76'}}>
-                <Title style={{color: 'white'}}>Service Requests</Title>
+                <Title style={styles.headerTitle}>SERVICE REQUESTS</Title>
                 <Button transparent>{''}</Button>
                 <Button transparent onPress={this.goToFilters.bind(this)}>
-                    <Icon style={{fontSize: fontScale+10, color: 'white'}} name='ios-funnel' />
+                    <Icon style={styles.headerIcon} name='md-options' />{/*'ios-funnel'*/}
                 </Button>
             </Header>
             <View style={{flex: 1}}>

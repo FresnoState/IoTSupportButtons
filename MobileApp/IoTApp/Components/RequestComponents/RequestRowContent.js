@@ -18,42 +18,37 @@ export default class RequestRowContent extends Component{
         return (
             <Grid>
                 <Card style={{backgroundColor: rowColor}}>
-                    <Row>
-                        <Row style={{margin: 5}}>
-                            <Col>
-                                <Row>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {timestamp.toLocaleDateString("en-us")}
-                                    </Text>
-                                </Row>
-                                <Row>
-                                    <Text style={{fontSize: fontScale}}>
-                                        {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
-                                    </Text> 
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row style={{margin: 5}}>
-                            <Col>
+                    <Row >
+                        <Col style={{padding: 5}}>
+                            <Row>
                                 <Text style={{fontSize: fontScale}}>
-                                    {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
+                                    {timestamp.toLocaleDateString("en-us")}
                                 </Text>
-                            </Col>
-                        </Row>
-                        <Row style={{margin: 5}}>
-                            <Col>
+                            </Row>
+                            <Row>
                                 <Text style={{fontSize: fontScale}}>
-                                    {this.props.requestData.item.S}
-                                </Text>
-                            </Col>
-                        </Row>
-                        <Row style={{margin: 5}}>
-                            <Col>
-                                <Text style={{fontSize: fontScale}}>
-                                    {this.props.requestData.currstatus.S}
-                                </Text>
-                            </Col>
-                        </Row>
+                                    {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
+                                </Text> 
+                            </Row>
+                        </Col>
+
+                        <Col style={{padding: 5}}>
+                            <Text style={{fontSize: fontScale}}>
+                                {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
+                            </Text>
+                        </Col>
+
+                        <Col style={{padding: 5}}>
+                            <Text style={{fontSize: fontScale}}>
+                                {this.props.requestData.item.S}
+                            </Text>
+                        </Col>
+
+                        <Col style={{padding: 5}}>
+                            <Text style={{fontSize: fontScale}}>
+                                {this.props.requestData.currstatus.S}
+                            </Text>
+                        </Col>
                     </Row>
                 </Card>
             </Grid>
