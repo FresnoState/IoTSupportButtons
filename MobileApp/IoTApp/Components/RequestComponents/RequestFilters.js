@@ -82,7 +82,11 @@ export default class RequestFilters extends Component{
                     </View>
                     {/*<View style={{flex: 1}}></View>*/}
                     <View style={{flex: 1.5, flexDirection: 'row', justifyContent: 'center'}}>
-                        <Button onPress={this.submit.bind(this)}>FILTER</Button>
+                        <Button style={{padding: 5}} onPress={this.submit.bind(this)}>
+                            <Text style={{margin: 10, color: 'white', fontSize: fontScale*1.5}}>
+                                FILTER
+                            </Text>
+                        </Button>
                     </View>
                 </View>
             </Container>

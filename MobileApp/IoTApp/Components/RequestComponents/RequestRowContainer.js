@@ -34,23 +34,28 @@ export default class RequestRowContainer extends Component{
         switch(this.props.requestData.currstatus.S){
             case "new":
                 return (
-                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'red'}}>
-                        <Text style={{fontSize: fontScale*2, color: 'white', fontWeight: 'bold'}}>!</Text>
-                    </Button>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 5, shadowColor: 'gray', shadowOpacity: 1, backgroundColor: 'red'}}>
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white', marginRight: 10}} name='ios-radio-button-off' />
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white'}} name='ios-arrow-forward' />
+                        {/*<Text style={{fontSize: fontScale*1.5, color: 'white', fontWeight: 'bold'}}>!</Text>*/}
+                    </TouchableOpacity>
                 );
                 break;
             case "open":
                 return (
-                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'orange'}}>
-                        <Icon style={{fontSize: fontScale*2}} name='ios-arrow-forward' />
-                    </Button>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 5, shadowColor: 'gray', shadowOpacity: 1, backgroundColor: '#ffc400'}}>
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white', marginRight: 10}} name='ios-contrast' />
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white'}} name='ios-arrow-forward' />
+                    </TouchableOpacity>
                 );
                 break;
             case "closed":
                 return (
-                    <Button style={{padding: 20, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.87, backgroundColor: 'black'}}>
-                        <Text style={{fontSize: fontScale*2, color: 'white', fontWeight: 'bold'}}>|</Text>
-                    </Button>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 5, shadowColor: 'gray', shadowOpacity: 1, backgroundColor: 'gray'}}>
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white', marginRight: 10}} name='ios-radio-button-on' />
+                        <Icon style={{fontSize: fontScale*1.6, color: 'white'}} name='ios-arrow-forward' />
+                        {/*<Text style={{fontSize: fontScale*1.5, color: 'white', fontWeight: 'bold'}}>|</Text>*/}
+                    </TouchableOpacity>
                 );
                 break;
         }
@@ -59,13 +64,15 @@ export default class RequestRowContainer extends Component{
     render() {
         var button = this.getButton();
         return (
-            <TouchableOpacity style={styles.requestRowContainer} onPress={this.goToNotes.bind(this)}>
+            <View style={styles.requestRowContainer} >
                 <RequestRowContent {...this.props} />
                 {button}
-                {/*<TouchableOpacity style={{backgroundColor: 'blue', shadowColor: 'gray', shadowOpacity: 5,borderRadius: 10, padding: 10, position: 'absolute', top: 15, left: Dimensions.get('window').width*0.7}}>
-                    <Icon style={{fontSize: fontScale*2, color: 'white'}} name='ios-arrow-forward' />
+                {/*<TouchableOpacity style={{backgroundColor: 'blue', shadowColor: 'gray', shadowOpacity: 1,borderRadius: 10, margin: 10, padding: 10, position: 'absolute', top: 5, right: 5, flexDirection: 'row'}}>
+                    <Text style={{color: 'white', marginRight: 10, fontSize: 10}}>Open</Text>
+                    <Icon style={{fontSize: fontScale*1.5, color: 'white', marginRight: 10}} name='ios-contrast' />
+                    <Icon style={{fontSize: fontScale*1.5, color: 'white'}} name='ios-arrow-forward' />
                 </TouchableOpacity>*/}
-            </TouchableOpacity>
+            </View>
         );
     }
 }

@@ -17,37 +17,30 @@ export default class RequestRowContent extends Component{
         var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
         return (
             <Grid>
-                <Card style={{backgroundColor: rowColor}}>
+                <Card style={{backgroundColor: rowColor, padding: 10, borderRadius: 5}}>
                     <Row >
                         <Col style={{padding: 5}}>
-                            <Row>
-                                <Text style={{fontSize: fontScale}}>
-                                    {timestamp.toLocaleDateString("en-us")}
-                                </Text>
-                            </Row>
-                            <Row>
-                                <Text style={{fontSize: fontScale}}>
-                                    {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
-                                </Text> 
-                            </Row>
+                            <Text style={{fontSize: fontScale}}>
+                                {timestamp.toLocaleDateString("en-us")}
+                            </Text>
+                            <Text style={{fontSize: fontScale}}>
+                                {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
+                            </Text> 
                         </Col>
-
                         <Col style={{padding: 5}}>
                             <Text style={{fontSize: fontScale}}>
-                                {this.props.requestData.location.S+"\n"+this.props.requestData.serialNumber.S}
+                                {this.props.requestData.location.S}
                             </Text>
                         </Col>
-
                         <Col style={{padding: 5}}>
                             <Text style={{fontSize: fontScale}}>
                                 {this.props.requestData.item.S}
                             </Text>
                         </Col>
-
-                        <Col style={{padding: 5}}>
-                            <Text style={{fontSize: fontScale}}>
+                        <Col size={0.5} style={{padding: 5}}>
+                            {/*<Text style={{fontSize: fontScale}}>
                                 {this.props.requestData.currstatus.S}
-                            </Text>
+                            </Text>*/}
                         </Col>
                     </Row>
                 </Card>

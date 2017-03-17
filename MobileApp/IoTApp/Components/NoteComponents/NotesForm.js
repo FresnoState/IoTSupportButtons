@@ -32,7 +32,7 @@ export default class NotesForm extends Component{
     
     onAdd(){  //handles the add services notes process
         if(this.state.notes == ''){ //checks that the notes are not left blank
-            alert("Add notes");
+            alert("Please add notes");
         }
         else{
             if(this.props.requestData.currstatus.S == "new"){ //if new request, update status to open
@@ -47,12 +47,12 @@ export default class NotesForm extends Component{
     
     confirmClose(){
         if(this.state.notes == ''){ //checks that notes have been made
-            alert("Add notes");
+            alert("Please add notes to close the request");
         }
         else{
             Alert.alert( //presents custom alert to check if the user wants to proceed with closing the ticket
                 "Confirm Close",  //alert tile
-                "Are you sure you want to close this ticket?", //alert message
+                "Are you sure you want to close this request?", //alert message
                 [
                     {text: "Yes", onPress: this.onClose.bind(this)}, //button 1, triggers onClose action
                     {text: "No"}  //button 2, causes alert to fade away and user to remain on notes scene w/o any changes made

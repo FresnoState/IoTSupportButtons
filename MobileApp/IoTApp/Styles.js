@@ -41,7 +41,7 @@ export default styles = StyleSheet.create({
     },
     requestRowContainer: {
         marginLeft: 10, 
-        marginRight: 10
+        marginRight: 10,
     },
     requestRowCard: {
     
