@@ -26,7 +26,7 @@ export default class RequestHeader extends Component{
     
     render(){
         return (
-            <View style={{flex: 1, flexDirection: 'row', margin: 10, padding: 5, marginBottom: 0, backgroundColor: '#002C76', borderRadius: 5}}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', margin: 10, padding: 5, marginBottom: 0, backgroundColor: '#002C76', borderRadius: 5}}>
                     <TouchableOpacity 
                         style={{flex: 1,flexDirection: 'row'}}
                         onPress={() => this.setActive('time')}
@@ -35,7 +35,6 @@ export default class RequestHeader extends Component{
                                 Time
                             </Text>
                             <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("time")} />
-                            {/*<Icon style={{fontSize: fontScale*2}} name='ios-arrow-down' />*/}
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={{flex: 1,flexDirection: 'row'}} 

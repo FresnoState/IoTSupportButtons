@@ -124,10 +124,10 @@ export default class RequestList extends Component {
                     <Icon style={styles.headerIcon} name='md-options' />{/*'ios-funnel'*/}
                 </Button>
             </Header>
-            <View style={{flex: 2}}>
+            <View style={{flex: 1}}>
                 <RequestHeader sortCol={this.state.sortCol} onSortCol={this.onSortCol.bind(this)} />
             </View>
-            <View style={{flex: 15}}>{/*, margin: 10, marginBottom: 0}}>*/}
+            <View style={{flex: 10}}>{/*, margin: 10, marginBottom: 0}}>*/}
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
