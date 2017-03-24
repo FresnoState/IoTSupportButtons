@@ -6,7 +6,8 @@ import {
   TouchableHighlight,
   ListView,
   RefreshControl,
-  Navigator
+  Navigator,
+  Image
 } from 'react-native';
 
 import {Col, Row, Grid, Card, CardItem, Container, Content, Header, Title, Button, Icon, Footer, FooterTab} from 'native-base';
@@ -26,7 +27,7 @@ export default class RequestList extends Component {
     
   componentDidMount(){
       this._getRequestData();
-      var reloadInterval = setInterval(this.onRefresh.bind(this), 300000); //for auto reloading data, currently set to every minute
+      var reloadInterval = setInterval(this.onRefresh.bind(this), 300000); //for auto reloading data, currently set to every 5 minutes but is configurable
   }
     
   //Commented out for testing local data updates
@@ -124,10 +125,18 @@ export default class RequestList extends Component {
                     <Icon style={styles.headerIcon} name='md-options' />{/*'ios-funnel'*/}
                 </Button>
             </Header>
+            <Image
+                source={{uri: "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg"}}
+                style={{flex: 1, margin: 10, marginBottom: 0, borderRadius: 5, backgroundColor: 'transparent', width: undefined, height: undefined, justifyContent: 'center', alignItems: 'center'}}
+            >
+                <Text style={{color: '#FFF', fontSize: fontScale*2, fontWeight: '900'}}>
+                    {this.state.viewServiceOwner.toUpperCase()}
+                </Text>
+            </Image>
             <View style={{flex: 1}}>
                 <RequestHeader sortCol={this.state.sortCol} onSortCol={this.onSortCol.bind(this)} />
             </View>
-            <View style={{flex: 10}}>{/*, margin: 10, marginBottom: 0}}>*/}
+            <View style={{flex: 8}}>{/*, margin: 10, marginBottom: 0}}>*/}
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}

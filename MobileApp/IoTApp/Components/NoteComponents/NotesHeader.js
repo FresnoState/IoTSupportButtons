@@ -22,31 +22,41 @@ export default class NotesHeader extends Component{
                 <Grid>
                     <Row>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Location: {this.props.requestData.location.S}</Text>
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Location: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.location.S}</Text>
                         </Col>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Item: {this.props.requestData.item.S}</Text>
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Item: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.item.S}</Text>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Action: {this.props.requestData.action.S}</Text>
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Action: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.action.S}</Text>
                         </Col>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Time: {timestamp.toLocaleString("en-us", options)}</Text>
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Time: </Text>
+                            <Text style={{fontSize: fontScale}}>{timestamp.toLocaleString("en-us", options)}</Text>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Division: {this.props.requestData.division.S}</Text>
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Division: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.division.S}</Text>
                         </Col>
                         <Col>
-                            <Text style={{fontSize: fontScale}}>Status: {this.props.requestData.currstatus.S}</Text>
+                            {/*<Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Status: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.currstatus.S}</Text>*/}
+                            <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Description: </Text>
+                            <Text style={{fontSize: fontScale}}>{this.props.requestData.description.S}</Text>
                         </Col>
                     </Row>
-                    <Row>
-                        <Text style={{fontSize: fontScale}}>Description: {this.props.requestData.description.S}</Text>
-                    </Row>
+                    {/*<Row>
+                        <Text style={{fontSize: fontScale, fontWeight: 'bold'}}>Description: </Text>
+                        <Text style={{fontSize: fontScale}}>{this.props.requestData.description.S}</Text>
+                    </Row>*/}
+                    
                 </Grid>
             </View>
         )

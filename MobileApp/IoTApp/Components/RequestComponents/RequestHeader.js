@@ -26,9 +26,9 @@ export default class RequestHeader extends Component{
     
     render(){
         return (
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', margin: 10, padding: 5, marginBottom: 0, backgroundColor: '#002C76', borderRadius: 5}}>
+            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', margin: 10, padding: 10, marginBottom: 0, backgroundColor: '#002C76', borderRadius: 5}}>
                     <TouchableOpacity 
-                        style={{flex: 1,flexDirection: 'row'}}
+                        style={{flex: 0.25,flexDirection: 'row'}}
                         onPress={() => this.setActive('time')}
                     >
                             <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
@@ -37,7 +37,7 @@ export default class RequestHeader extends Component{
                             <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("time")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 1,flexDirection: 'row'}} 
+                        style={{flex: 0.3,flexDirection: 'row'}} 
                         onPress={() => this.setActive('location')}
                     >
                             <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
@@ -46,7 +46,7 @@ export default class RequestHeader extends Component{
                             <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("location")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 1,flexDirection: 'row'}}
+                        style={{flex: 0.25,flexDirection: 'row'}}
                         onPress={() => this.setActive('item')}
                     >
                             <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
@@ -55,7 +55,7 @@ export default class RequestHeader extends Component{
                             <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("item")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 0.7,flexDirection: 'row'}}
+                        style={{flex: 0.2,flexDirection: 'row'}}
                         onPress={() => this.setActive('status')}
                     >
                             <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>

@@ -77,9 +77,9 @@ export default class NotesForm extends Component{
         var timestamp = new Date(Number(rowData.timeStamp.S));
         var options = {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"};
         return (
-            <Card style={{backgroundColor: '#CCC'}}>
-                <Text style={{margin: 10}}>{decodeURIComponent(rowData.notes.S)}</Text>
-                <Text>{timestamp.toLocaleString("en-us", options)}</Text>
+            <Card style={{backgroundColor: '#CCC', borderRadius: 10, margin: 1, padding: 5}}>
+                <Text style={{padding: 5, fontSize: fontScale*1.2}}>{decodeURIComponent(rowData.notes.S)}</Text>
+                <Text style={{padding: 5, fontSize: fontScale}}>{timestamp.toLocaleString("en-us", options)}</Text>
             </Card>
         );
     }
@@ -91,12 +91,12 @@ export default class NotesForm extends Component{
                 <NotesButtons onAdd={this.onAdd.bind(this)} confirmClose={this.confirmClose.bind(this)} />
             </Row>
         );
-        var notes = this.props.requestData.currstatus.S == "closed" ? (<View></View>) : (
+        var textbox = this.props.requestData.currstatus.S == "closed" ? (<View></View>) : (
             <Row size={3}>
-                <View style={{flex: 1, alignItems: 'center'}}>
+                <View style={{flex: 1, alignItems: 'center', marginRight: 5}}>
                     <Input 
                         placeholder="Add Notes Here" 
-                        style={{backgroundColor: '#CCC', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width-20, fontSize: fontScale}}
+                        style={{/*backgroundColor: '#dddddd'*/ backgroundColor: '#FFF', height: Dimensions.get('window').height/4, width: Dimensions.get('window').width-20, fontSize: fontScale, borderWidth: 1, borderRadius: 10}}
                         value={this.state.notes}
                         onChangeText={(notes) => this.setState({notes})}
                         multiline
@@ -113,19 +113,24 @@ export default class NotesForm extends Component{
                         <Icon style={styles.headerIcon} name='ios-arrow-back' />
                     </Button>
                 </Header>
-                <View style={{flex: 1, margin: 10}}>
+                <View style={{flex: 1}}>
                     <Grid>
-                        <Row size={2}>
+                        <Row size={2} style={{margin: 10}}>
                             <NotesHeader {...this.props} /> 
                         </Row>
-                        <Row size={oldNotesSize} style={{backgroundColor: '#f8f8f8', marginBottom: 10}}>
+                        <Row size={1} style={{backgroundColor: '#bbcce6', justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{fontSize: fontScale*3, color: 'white', fontWeight: 'bold'}}>
+                                {this.props.requestData.currstatus.S.toUpperCase()}
+                            </Text>
+                        </Row>
+                        <Row size={oldNotesSize} style={{backgroundColor: '#f8f8f8', margin: 10, borderRadius: 10}}>
                             <ListView
                                 dataSource={this.state.dataSource}
                                 renderRow={this.renderRow.bind(this)}
                             />
                         </Row>
                         {/*() => {if(this.props.requestData.currstatus.S != "closed") return notes;} */}
-                        {notes}
+                        {textbox}
                         {buttons}
                     </Grid>
                 </View>
