@@ -73,6 +73,20 @@ export default class NotesForm extends Component{
         this.props.navigator.pop();
     }
     
+    getHeaderColor(){
+        switch(this.props.requestData.currstatus.S){
+            case "new":
+                return '#ea2323';
+                break;
+            case "open":
+                return '#eace00';
+                break;
+            case "closed": 
+                return 'gray';
+                break;
+        }
+    }
+    
     renderRow(rowData){
         var timestamp = new Date(Number(rowData.timeStamp.S));
         var options = {year: "numeric", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit"};
@@ -115,11 +129,11 @@ export default class NotesForm extends Component{
                 </Header>
                 <View style={{flex: 1}}>
                     <Grid>
-                        <Row size={2} style={{margin: 10}}>
+                        <Row size={2} style={{backgroundColor: this.getHeaderColor()}}>
                             <NotesHeader {...this.props} /> 
                         </Row>
-                        <Row size={1} style={{backgroundColor: '#bbcce6', justifyContent: 'center', alignItems: 'center'}}>
-                            <Text style={{fontSize: fontScale*3, color: 'white', fontWeight: 'bold'}}>
+                        <Row size={1} style={{backgroundColor: this.getHeaderColor(), justifyContent: 'center', alignItems: 'center'}}>
+                            <Text style={{fontSize: fontScale*2.5, color: 'white', fontWeight: 'bold'}}>
                                 {this.props.requestData.currstatus.S.toUpperCase()}
                             </Text>
                         </Row>

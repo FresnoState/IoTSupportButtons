@@ -43,7 +43,7 @@ export default class RequestRowContainer extends Component{
                 break;
             case "open":
                 return (
-                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, backgroundColor: '#ffc400'}}>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, backgroundColor: '#eace00'}}>
                         <Icon style={{fontSize: fontScale*1.8, color: 'white', marginRight: 10}} name='ios-contrast' />
                         <Icon style={{fontSize: fontScale*1.8, color: 'white'}} name='ios-arrow-forward' />
                     </TouchableOpacity>

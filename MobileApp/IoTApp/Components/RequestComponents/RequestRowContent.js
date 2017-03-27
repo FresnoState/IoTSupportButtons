@@ -17,7 +17,7 @@ export default class RequestRowContent extends Component{
     
     componentDidMount(){
         this.determineUrgency();
-        var reloadInterval = setInterval(this.determineUrgency.bind(this), 60000);
+        var reloadInterval = setInterval(this.determineUrgency.bind(this), 300000);
     }
         
     determineUrgency(){ 
@@ -42,20 +42,13 @@ export default class RequestRowContent extends Component{
                 getNotes(this.props.requestData, callback);
             }
         }
-        
-        /*
-        if(new Date()%2 == 0)
-            this.setState({rowColor: '#EEE'});
-        else
-            this.setState({rowColor: '#d8d8d8'});
-        */   
-        //this.setState({rowColor: '#EEE'});
+
     }
     
     setRowColor(minutesDifferent){
-        //have intervals be an input array?
+        //have intervals be an input array for configuration?
         if(minutesDifferent < 5){
-            this.setState({rowColor: '#ffffff'});
+            this.setState({rowColor: '#fdfdfd'});
         }
         else if(minutesDifferent < 10){
             this.setState({rowColor: '#fdfd96'});
