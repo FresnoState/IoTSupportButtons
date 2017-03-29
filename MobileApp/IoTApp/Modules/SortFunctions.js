@@ -61,23 +61,17 @@ function sortByStatus(a, b){
     if(status1 == status2){
         return 0;
     }
-    else if(status1 == 'new'){
+    else if(status1 == 'new'){ //new has priority over open or closed
         return -1;
     } 
-    else if(status2 == 'new'){
-        return 1;
+    else if(status2 == 'new'){ //new has priority over open or closed
+        return 1;     
     }
-    else if(status1 == 'open'){
+    else if(status1 == 'open'){ //open has priority over closed
         return -1;
     }
-    else{ //for all others sort alphabetically, most likely to be removed later
-        if(status1 < status2){
-            return -1
-        }
-        if(status1 > status2){
-            return 1;
-        }
-        return 0;
+    else if(status2 == 'open'){ //open has priority over closed
+        return 1;
     }
 }
 
