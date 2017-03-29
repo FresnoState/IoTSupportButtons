@@ -16,13 +16,13 @@ export default class NotesButtons extends Component{
     
     render(){
         return (
-            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'center'}}>
-                <Button style={{margin: 10}} onPress={this.props.onAdd.bind(this)}>
+            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around', margin: 10}}>
+                <Button style={{padding: 10}} onPress={this.props.onAdd.bind(this)}>
                     <Text style={{fontSize: fontScale*1.5, color: 'white'}}>
                         ADD NOTES
                     </Text>
                 </Button>
-                <Button danger style={{margin: 10}} onPress={this.props.confirmClose.bind(this)}>
+                <Button danger style={{padding: 10}} onPress={this.props.confirmClose.bind(this)}>
                     <Text style={{fontSize: fontScale*1.5, color: 'white'}}>
                         CLOSE REQUEST
                     </Text>

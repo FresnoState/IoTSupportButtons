@@ -66,7 +66,7 @@ export default class RequestRowContent extends Component{
         var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
         return (
             <Grid>
-                <Card style={{backgroundColor: this.state.rowColor, padding: 10, borderRadius: 5}}>
+                <Card style={{backgroundColor: this.state.rowColor, padding: 10, borderRadius: 10}}>
                     <Row >
                         <Col size={0.25} style={{padding: 5}}>
                             <Text style={{fontSize: fontScale}}>
