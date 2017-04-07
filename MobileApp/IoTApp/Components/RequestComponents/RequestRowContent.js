@@ -15,13 +15,28 @@ export default class RequestRowContent extends Component{
         this.state = {rowColor: '#fff'};
     }
     
-    componentDidMount(){
+    /*componentDidMount(){
         this.determineUrgency();
         var reloadInterval = setInterval(this.determineUrgency.bind(this), 300000);
     }
+    
+    componentWillReceiveProps(nextProps){
+        this.determineUrgency();
+        console.log(new Date(Number(nextProps.requestData.timeStamp.S))+" "+ nextProps.requestData.currstatus.S);
+        if(this.props != nextProps){
+            this.determineUrgency();
+            this.setState({rowColor: 'purple'});
+        }
+    }*/
         
     determineUrgency(){ 
+        /*if(this.props.requestData.currstatus.S == "closed"){
+            //console.log("determining urgency: "+ new Date(Number(this.props.requestData.timeStamp.S)));
+            this.setState({rowColor: 'blue'});
+        }*/
+        //console.log(this.props.requestData.currstatus.S+": "+ new Date(Number(this.props.requestData.timeStamp.S)));
         if(this.props.requestData.currstatus.S == "closed"){
+            //console.log("Closed: "+ new Date(Number(this.props.requestData.timeStamp.S)));
             this.setState({rowColor: '#a3a3a3'});
         }
         else{
@@ -62,11 +77,12 @@ export default class RequestRowContent extends Component{
     }
     
     render() {
-        //var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
+        var rowColor = (this.props.rowID % 2) ? '#EEE' : '#d8d8d8'; //test colors
         var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
         return (
             <Grid>
-                <Card style={{backgroundColor: this.state.rowColor, padding: 10, borderRadius: 10}}>
+            {/*<Card style={{backgroundColor: this.state.rowColor, padding: 10, borderRadius: 10}}>*/}
+            <Card style={{backgroundColor: rowColor, padding: 10, borderRadius: 10}}>
                     <Row >
                         <Col size={0.25} style={{padding: 5}}>
                             <Text style={{fontSize: fontScale}}>
