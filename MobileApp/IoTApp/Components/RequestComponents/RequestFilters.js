@@ -51,7 +51,7 @@ export default class RequestFilters extends Component{
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <View style={{flex: 0.5}}></View>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dbe4f2'}}>
-                        <Text style={{fontSize: fontScale*1.5, color: '#0e51c3'}}>SELECT SERVICE OWNER</Text>
+                        <Text style={{fontSize: fontScale*1.5, fontWeight: 'bold', color: '#0e51c3'}}>SELECT SERVICE OWNER</Text>
                     </View>
                     <View style={{flex: 3}}>
                         <Picker
@@ -65,7 +65,7 @@ export default class RequestFilters extends Component{
                         </Picker>
                     </View>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dbe4f2'}}>
-                        <Text style={{fontSize: fontScale*1.5, color: '#0e51c3'}}>SELECT STATUS</Text>
+                        <Text style={{fontSize: fontScale*1.5, fontWeight: 'bold',  color: '#0e51c3'}}>SELECT STATUS</Text>
                     </View>
                     <View style={{flex: 3}}>
                         <Picker
@@ -83,7 +83,7 @@ export default class RequestFilters extends Component{
                     {/*<View style={{flex: 1}}></View>*/}
                     <View style={{flex: 1.5, flexDirection: 'row', justifyContent: 'center'}}>
                         <Button style={{padding: 5}} onPress={this.submit.bind(this)}>
-                            <Text style={{margin: 10, color: 'white', fontSize: fontScale*1.5}}>
+                            <Text style={{margin: 10, color: 'white', fontSize: fontScale*1.5, fontWeight: '500'}}>
                                 FILTER
                             </Text>
                         </Button>
