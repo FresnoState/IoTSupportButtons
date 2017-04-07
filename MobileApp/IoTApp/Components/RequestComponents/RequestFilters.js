@@ -49,7 +49,12 @@ export default class RequestFilters extends Component{
                     </Button>
                 </Header>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <View style={{flex: 0.5}}></View>
+                    <View style={{flex: 0.75, margin: 20, marginBottom: 25, alignItems: 'center', justifyContent: 'center'}}>
+                        <Text style={{fontSize: fontScale*1.1, fontStyle: 'italic', textAlign: 'center'}}>
+                           Filter requests by service owner and/or status.{"\n"}
+                           Select a service owner before selecting status "New", "Open", or "Closed".
+                        </Text>
+                    </View>
                     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dbe4f2'}}>
                         <Text style={{fontSize: fontScale*1.5, fontWeight: 'bold', color: '#0e51c3'}}>SELECT SERVICE OWNER</Text>
                     </View>
@@ -80,7 +85,6 @@ export default class RequestFilters extends Component{
                             <Item label="Closed" value="closed" />
                         </Picker>
                     </View>
-                    {/*<View style={{flex: 1}}></View>*/}
                     <View style={{flex: 1.5, flexDirection: 'row', justifyContent: 'center'}}>
                         <Button style={{padding: 5}} onPress={this.submit.bind(this)}>
                             <Text style={{margin: 10, color: 'white', fontSize: fontScale*1.5, fontWeight: '500'}}>
