@@ -66,6 +66,7 @@ export default class RequestFilters extends Component{
                         >
                             <Item label="All" value="All Service Owners" />
                             <Item label="DISCOVERe Hub" value="DISCOVEReHub" />
+                            <Item label="Pay for Print" value="P4P" />
                             <Item label="Library IT" value="LibraryIT" />
                         </Picker>
                     </View>
