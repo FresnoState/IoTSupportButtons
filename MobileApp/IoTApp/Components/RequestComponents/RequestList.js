@@ -66,13 +66,10 @@ export default class RequestList extends Component {
     
   onRefresh(){
       this.setState({refreshing: true});
-      /*setTimeout(() => {
+      setTimeout(() => {
           this._getRequestData();
-          console.log(this.state.dataSource);
           this.setState({refreshing: false}); 
-      }, 5000);*/
-      this._getRequestData();
-      this.setState({refreshing: false}); 
+      }, 5000);
   }
     
   onFilter(serviceOwner, status){
