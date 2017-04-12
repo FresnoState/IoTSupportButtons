@@ -34,7 +34,7 @@ export default class RequestRowContainer extends Component{
         switch(this.props.requestData.currstatus.S){
             case "new":
                 return (
-                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, backgroundColor: 'red'}}>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, shadowOffset: {width: 1, height: 3}, backgroundColor: 'red'}}>
                         <Icon style={{fontSize: fontScale*1.8, color: 'white', marginRight: 10}} name='ios-radio-button-off' />
                         <Icon style={{fontSize: fontScale*1.8, color: 'white'}} name='ios-arrow-forward' />
                         {/*<Text style={{fontSize: fontScale*1.5, color: 'white', fontWeight: 'bold'}}>!</Text>*/}
@@ -43,7 +43,7 @@ export default class RequestRowContainer extends Component{
                 break;
             case "open":
                 return (
-                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, backgroundColor: '#eace00'}}>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, shadowOffset: {width: 1, height: 3}, backgroundColor: '#eace00'}}>
                         <Icon style={{fontSize: fontScale*1.8, color: 'white', marginRight: 10}} name='ios-contrast' />
                         <Icon style={{fontSize: fontScale*1.8, color: 'white'}} name='ios-arrow-forward' />
                     </TouchableOpacity>
@@ -51,7 +51,7 @@ export default class RequestRowContainer extends Component{
                 break;
             case "closed":
                 return (
-                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, backgroundColor: 'gray'}}>
+                    <TouchableOpacity onPress={this.goToNotes.bind(this)} style={{flexDirection: 'row', margin: 10, padding: 10, borderRadius: 10, position: 'absolute', top: 5, right: 15, shadowColor: '#333333', shadowOpacity: 1, shadowOffset: {width: 1, height: 3}, backgroundColor: 'gray'}}>
                         <Icon style={{fontSize: fontScale*1.8, color: 'white', marginRight: 10}} name='ios-radio-button-on' />
                         <Icon style={{fontSize: fontScale*1.8, color: 'white'}} name='ios-arrow-forward' />
                         {/*<Text style={{fontSize: fontScale*1.5, color: 'white', fontWeight: 'bold'}}>|</Text>*/}
