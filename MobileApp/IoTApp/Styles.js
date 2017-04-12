@@ -25,7 +25,23 @@ export default styles = StyleSheet.create({
     headerTitle: {
         color: '#ffffff'  
     },
-    activeSortCol: {
+    backgroundImage: {
+        flex: 1,
+        margin: 10,
+        marginBottom: 0,
+        borderRadius: 5,
+        backgroundColor: 'transparent',
+        width: undefined,
+        height: undefined,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    backgroundImageText: {
+        color: '#FFF',
+        fontSize: fontScale*2,
+        fontWeight: '900'
+    },
+    /*activeSortCol: {
         flex: 1,
         flexDirection: 'row',
         borderColor: '#d4d4de',
@@ -38,7 +54,7 @@ export default styles = StyleSheet.create({
         borderColor: '#d4d4de',
         borderWidth: 0.5,
         backgroundColor: '#FFF',
-    },
+    },*/
     requestRowContainer: {
         marginLeft: 10, 
         marginRight: 10,

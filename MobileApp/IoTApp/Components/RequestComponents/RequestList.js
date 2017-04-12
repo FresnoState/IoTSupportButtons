@@ -124,9 +124,9 @@ export default class RequestList extends Component {
             </Header>
             <Image
                 source={{uri: "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg"}}
-                style={{flex: 1, margin: 10, marginBottom: 0, borderRadius: 5, backgroundColor: 'transparent', width: undefined, height: undefined, justifyContent: 'center', alignItems: 'center'}}
+                style={styles.backgroundImage}
             >
-                <Text style={{color: '#FFF', fontSize: fontScale*2, fontWeight: '900'}}>
+                <Text style={styles.backgroundImageText}>
                     {this.state.viewServiceOwner.toUpperCase()}
                 </Text>
             </Image>
