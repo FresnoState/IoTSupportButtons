@@ -15,7 +15,7 @@ export default class RequestFilters extends Component{
     }
     
     onServiceOwnerChange(serviceOwner){
-        if(serviceOwner == "All Service Owners" && !(this.state.selectedStatus == "New/Open" || this.state.selectedStatus == "All")){
+        if(serviceOwner == "All Service Owners" && !(this.state.selectedStatus == "New/Open" || this.state.selectedStatus == "All Statuses")){
             alert("Select a specific service owner to filter by a single status");
             this.setState({selectedStatus: "All Statuses"});
         }
@@ -23,7 +23,7 @@ export default class RequestFilters extends Component{
     }
     
     onStatusChange(status){
-        if(this.state.selectedServiceOwner == "All Service Owners" && !(status == "New/Open" || status == "All")){
+        if(this.state.selectedServiceOwner == "All Service Owners" && !(status == "New/Open" || status == "All Statuses")){
             alert("Select a specific service owner to filter by a single status");
             this.setState({selectedStatus: "All Statuses"});
         }
