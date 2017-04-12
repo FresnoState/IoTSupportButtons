@@ -5,8 +5,9 @@ import {
   Picker,
   Item
 } from 'react-native';
-import Dimensions from 'Dimensions';
 import {Col, Row, Grid, Container, Content, Header, Title, Icon, Button} from 'native-base';
+
+import styles from '../../Styles.js';
 
 export default class RequestFilters extends Component{
     constructor(props){
@@ -51,18 +52,18 @@ export default class RequestFilters extends Component{
                     </Button>
                 </Header>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <View style={{flex: 0.75, margin: 20, marginBottom: 25, alignItems: 'center', justifyContent: 'center'}}>
-                        <Text style={{fontSize: fontScale*1.1, fontStyle: 'italic', textAlign: 'center'}}>
+                    <View style={styles.filterMessageContainer}>
+                        <Text style={styles.filterMessageText}>
                            Filter requests by service owner and/or status.{"\n"}
                            Select a service owner before selecting status "New", "Open", or "Closed".
                         </Text>
                     </View>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dbe4f2'}}>
-                        <Text style={{fontSize: fontScale*1.5, fontWeight: 'bold', color: '#0e51c3'}}>SELECT SERVICE OWNER</Text>
+                    <View style={styles.filterBanner}>
+                        <Text style={styles.filterBannerText}>SELECT SERVICE OWNER</Text>
                     </View>
                     <View style={{flex: 3}}>
                         <Picker
-                            itemStyle={{fontSize: fontScale, height: Dimensions.get('window').height*0.2}}
+                            itemStyle={styles.pickerItem}
                             selectedValue={this.state.selectedServiceOwner}
                             onValueChange={this.onServiceOwnerChange.bind(this)}
                         >
@@ -72,12 +73,12 @@ export default class RequestFilters extends Component{
                             <Item label="Library IT" value="LibraryIT" />
                         </Picker>
                     </View>
-                    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#dbe4f2'}}>
-                        <Text style={{fontSize: fontScale*1.5, fontWeight: 'bold',  color: '#0e51c3'}}>SELECT STATUS</Text>
+                    <View style={styles.filterBanner}>
+                        <Text style={styles.filterBannerText}>SELECT STATUS</Text>
                     </View>
                     <View style={{flex: 3}}>
                         <Picker
-                            itemStyle={{fontSize: fontScale, height: Dimensions.get('window').height*0.2}}
+                            itemStyle={styles.pickerItem}
                             selectedValue={this.state.selectedStatus}
                             onValueChange={this.onStatusChange.bind(this)}
                         >
@@ -88,9 +89,9 @@ export default class RequestFilters extends Component{
                             <Item label="Closed" value="closed" />
                         </Picker>
                     </View>
-                    <View style={{flex: 1.5, flexDirection: 'row', justifyContent: 'center'}}>
+                    <View style={styles.filterButtonContainer}>
                         <Button style={{padding: 5}} onPress={this.submit.bind(this)}>
-                            <Text style={{margin: 10, color: 'white', fontSize: fontScale*1.5, fontWeight: '500'}}>
+                            <Text style={styles.buttonText}>
                                 FILTER
                             </Text>
                         </Button>
