@@ -3,7 +3,7 @@ import Dimensions from 'Dimensions';
 //will use this as a global style sheet
 
 var width = Dimensions.get('window').width;
-global.fontScale; //will use this as a base font scale, later will on will make it local variable
+global.fontScale; //will use this as a base font scale, later on will make it local variable
 if(width > 900){
     fontScale = 18;
 }
@@ -75,6 +75,12 @@ export default styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center'
     },
+    notesButtonsContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        margin: 10
+    },
     pickerItem: {
         fontSize: fontScale,
         height: Dimensions.get('window').height*0.2
@@ -106,17 +112,49 @@ export default styles = StyleSheet.create({
     requestRowText: {
         
     },
-    NotesContainer: {
-        
+    notesContainer: {
+        backgroundColor: '#efefef',
+        margin: 10,
+        borderRadius: 10
     },
-    NoteCard: {
-        
+    noteCard: {
+        backgroundColor: '#EFF2B9',
+        borderRadius: 10,
+        margin: 1,
+        padding: 5
     },
-    NoteText: {
-        
+    noteText: {
+        padding: 5,
+        fontSize: fontScale*1.2
     },
-    NotesInput: {
-        
+    noteDateText: {
+        padding: 5,
+        fontSize: fontScale
+    },
+    notesInputContainer: {
+        flex: 1, 
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    notesInput: {
+        /*backgroundColor: '#dddddd'*/
+        backgroundColor: '#fbfbfb',
+        height: Dimensions.get('window').height*0.2,
+        width: Dimensions.get('window').width-20,
+        fontSize: fontScale,
+        borderWidth: 1,
+        borderRadius: 10
+    },
+    statusBanner: {
+        justifyContent: 'center', 
+        alignItems: 'center'
+    },
+    statusBannerText: {
+        fontSize: fontScale*2.5,
+        color: 'white',
+        fontWeight: 'bold',
+        marginTop: 10,
+        marginBottom: 10
     }
     //add notes header classes
 });
