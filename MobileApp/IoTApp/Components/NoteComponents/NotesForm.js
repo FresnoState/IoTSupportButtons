@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 
 import {Col, Row, Grid, Card, Container, Content, Header, Title, Icon, Input, Button} from 'native-base';
-import Dimensions from 'Dimensions';
 
 import styles from '../../Styles.js';
 import NotesHeader from './NotesHeader.js';

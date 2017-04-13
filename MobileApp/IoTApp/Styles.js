@@ -155,6 +155,25 @@ export default styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 10
+    },
+    statusButton: {
+        flexDirection: 'row', 
+        margin: 10, 
+        padding: 10, 
+        borderRadius: 10, 
+        position: 'absolute', 
+        top: 5, 
+        right: 15, 
+        shadowColor: '#333333', 
+        shadowOpacity: 1, 
+        shadowOffset: {
+            width: 1, 
+            height: 3
+        }
+    },
+    statusIcon: {
+        fontSize: fontScale*1.8,
+        color: 'white'
     }
     //add notes header classes
 });
