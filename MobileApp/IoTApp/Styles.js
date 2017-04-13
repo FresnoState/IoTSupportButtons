@@ -85,6 +85,21 @@ export default styles = StyleSheet.create({
         fontSize: fontScale,
         height: Dimensions.get('window').height*0.2
     },
+    activeSortText: {
+        fontSize: fontScale*1.1,
+        fontWeight: '900',
+        color: 'white', 
+        padding: 5
+    },
+    inactiveSortText: {
+        fontSize: fontScale*1.1, 
+        color: 'white', 
+        padding: 5
+    },
+    sortIcon: {
+        fontSize: fontScale*2.5, 
+        color: 'white'
+    },
     /*activeSortCol: {
         flex: 1,
         flexDirection: 'row',
@@ -99,6 +114,15 @@ export default styles = StyleSheet.create({
         borderWidth: 0.5,
         backgroundColor: '#FFF',
     },*/
+    sortHeaderContainer: {
+        flex: 1, 
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        margin: 10, padding: 10, 
+        marginBottom: 0, 
+        backgroundColor: '#002C76', 
+        borderRadius: 5
+    },
     requestRowContainer: {
         marginLeft: 10, 
         marginRight: 10,

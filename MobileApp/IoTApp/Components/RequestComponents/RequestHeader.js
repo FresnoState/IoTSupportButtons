@@ -8,6 +8,8 @@ import {
 
 import {Col, Row, Grid, Icon} from 'native-base';
 
+import styles from '../../Styles.js';
+
 export default class RequestHeader extends Component{
     constructor(props){
         super(props);
@@ -26,51 +28,43 @@ export default class RequestHeader extends Component{
     
     render(){
         return (
-            <View style={{flex: 1, flexDirection: 'row', alignItems: 'center', margin: 10, padding: 10, marginBottom: 0, backgroundColor: '#002C76', borderRadius: 5}}>
+            <View style={styles.sortHeaderContainer}>
                     <TouchableOpacity 
-                        style={{flex: 0.25,flexDirection: 'row'}}
+                        style={{flex: 0.25, flexDirection: 'row'}}
                         onPress={() => this.setActive('time')}
                     >
-                            <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
+                            <Text style={this.props.sortCol == 'time' ? styles.activeSortText : styles.inactiveSortText}>
                                 Time
                             </Text>
-                            <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("time")} />
+                            <Icon style={styles.sortIcon} name={this.getIcon("time")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 0.3,flexDirection: 'row'}} 
+                        style={{flex: 0.3, flexDirection: 'row'}} 
                         onPress={() => this.setActive('location')}
                     >
-                            <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
+                            <Text style={this.props.sortCol == 'location' ? styles.activeSortText : styles.inactiveSortText}>
                                 Location
                             </Text>
-                            <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("location")} />
+                            <Icon style={styles.sortIcon} name={this.getIcon("location")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 0.25,flexDirection: 'row'}}
+                        style={{flex: 0.25, flexDirection: 'row'}}
                         onPress={() => this.setActive('item')}
                     >
-                            <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
+                            <Text style={this.props.sortCol == 'item' ? styles.activeSortText : styles.inactiveSortText}>
                                 Item
                             </Text>
-                            <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("item")} />
+                            <Icon style={styles.sortIcon} name={this.getIcon("item")} />
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={{flex: 0.2,flexDirection: 'row'}}
+                        style={{flex: 0.2, flexDirection: 'row'}}
                         onPress={() => this.setActive('status')}
                     >
-                            <Text style={{fontSize: fontScale, color: 'white', padding: 5}}>
+                            <Text style={this.props.sortCol == 'status' ? styles.activeSortText : styles.inactiveSortText}>
                                 Status
                             </Text>
-                            <Icon style={{fontSize: fontScale*2.5, color: 'white'}} name={this.getIcon("status")} />
+                            <Icon style={styles.sortIcon} name={this.getIcon("status")} />
                     </TouchableOpacity>
-                    {/*<TouchableOpacity 
-                        style={this.props.sortCol == 'status' ? styles.activeSortCol : styles.inactiveSortCol} 
-                        onPress={() => this.setActive('status')}
-                    >
-                            <Text style={{fontSize: fontScale}}>
-                                Status
-                            </Text>
-                    </TouchableOpacity>*/}
             </View>
         );
     }
