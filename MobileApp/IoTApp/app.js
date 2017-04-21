@@ -28,8 +28,9 @@ export default class iotapp extends Component {
               break;
           case "Request Filters":
               return (
-                  <RequestFilters navigator={navigator} {...route.passProps} />
+                <RequestFilters navigator={navigator} {...route.passProps} />
               );
+              break;
           case "Notes Form":
               return (
                 <NotesForm navigator={navigator} {...route.passProps} />
