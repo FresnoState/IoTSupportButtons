@@ -106,10 +106,17 @@ export default class RequestList extends Component {
     
   updateLocalData(rowID, status){
       var oldData = this.state.dataSource._dataBlob.s1;
-      var updatedData = oldData.slice();
-      updatedData[rowID] = {...oldData[rowID]};
-      updatedData[rowID].currstatus.S = status;
-      this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
+      if((this.state.viewStatus == "New/Open" && status == "closed") || (this.state.viewStatus != "All Statuses" && this.state.viewStatus != "New/Open" && this.state.viewStatus != status)){
+          delete oldData[rowID];
+          var updatedData = oldData.slice();
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
+      }
+      else{
+          var updatedData = oldData.slice();
+          updatedData[rowID] = {...oldData[rowID]};
+          updatedData[rowID].currstatus.S = status;
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
+      }
   }
     
   render() {
