@@ -33,6 +33,11 @@ export default class RequestFilters extends Component{
         }
     }
     
+    clearDefaults(){
+        this.setState({selectedServiceOwner: "All Service Owners"});
+        this.setState({selectedStatus: "New/Open"});
+    }
+    
     onCancel(){ //"X" button functionality for closing out of scene
         this.props.navigator.pop();
     }
@@ -90,6 +95,11 @@ export default class RequestFilters extends Component{
                         </Picker>
                     </View>
                     <View style={styles.filterButtonContainer}>
+                        <Button style={{padding: 5}} onPress={this.clearDefaults.bind(this)}>
+                            <Text style={styles.buttonText}>
+                                CLEAR
+                            </Text>
+                        </Button>
                         <Button style={{padding: 5}} onPress={this.submit.bind(this)}>
                             <Text style={styles.buttonText}>
                                 FILTER
