@@ -3,6 +3,7 @@ import Dimensions from 'Dimensions';
 //will use this as a global style sheet
 
 var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 global.fontScale; //will use this as a base font scale, later on will make it local variable
 if(width > 900){
     fontScale = 18;
@@ -26,6 +27,7 @@ export default styles = StyleSheet.create({
         color: '#ffffff'  
     },
     backgroundImage: {
+        //flex: (height > width) ? 1 : 1.5,
         flex: 1,
         margin: 10,
         marginBottom: 0,
@@ -73,7 +75,9 @@ export default styles = StyleSheet.create({
     filterButtonContainer: {
         flex: 1.5,
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'space-around',
+        marginLeft: 15,
+        marginRight: 15
     },
     notesButtonsContainer: {
         flex: 1,
@@ -83,7 +87,11 @@ export default styles = StyleSheet.create({
     },
     pickerItem: {
         fontSize: fontScale,
-        height: Dimensions.get('window').height*0.2
+        height: height*0.2
+    },
+    requestListHeaderContainer: {
+        //flex: (height > width) ? 1 : 2.5
+        flex: 1
     },
     activeSortText: {
         fontSize: fontScale*1.1,
@@ -100,20 +108,6 @@ export default styles = StyleSheet.create({
         fontSize: fontScale*2.5, 
         color: 'white'
     },
-    /*activeSortCol: {
-        flex: 1,
-        flexDirection: 'row',
-        borderColor: '#d4d4de',
-        borderWidth: 0.5,
-        backgroundColor: '#d0d0db',
-    },
-    inactiveSortCol: {
-        flex: 1,
-        flexDirection: 'row',
-        borderColor: '#d4d4de',
-        borderWidth: 0.5,
-        backgroundColor: '#FFF',
-    },*/
     sortHeaderContainer: {
         flex: 1, 
         flexDirection: 'row', 
@@ -123,18 +117,13 @@ export default styles = StyleSheet.create({
         backgroundColor: '#002C76', 
         borderRadius: 5
     },
+    requestListContainer: {
+        //flex: (height > width) ? 8 : 6
+        flex: 8
+    },
     requestRowContainer: {
         marginLeft: 10, 
         marginRight: 10,
-    },
-    requestRowCard: {
-    
-    },
-    requestRowCol: {
-        
-    },
-    requestRowText: {
-        
     },
     notesContainer: {
         backgroundColor: '#efefef',
@@ -163,8 +152,8 @@ export default styles = StyleSheet.create({
     notesInput: {
         /*backgroundColor: '#dddddd'*/
         backgroundColor: '#fbfbfb',
-        height: Dimensions.get('window').height*0.2,
-        width: Dimensions.get('window').width-20,
+        height: height*0.2,
+        width: width-20,
         fontSize: fontScale,
         borderWidth: 1,
         borderRadius: 10
@@ -186,7 +175,7 @@ export default styles = StyleSheet.create({
         padding: 10, 
         borderRadius: 10, 
         position: 'absolute', 
-        top: 5, 
+        top: 3, 
         right: 15, 
         shadowColor: '#333333', 
         shadowOpacity: 1, 
@@ -198,6 +187,12 @@ export default styles = StyleSheet.create({
     statusIcon: {
         fontSize: fontScale*1.8,
         color: 'white'
+    },
+    requestCard: {
+        padding: 10, 
+        borderRadius: 10
+    },
+    requestCardText: {
+        fontSize: fontScale
     }
-    //add notes header classes
 });

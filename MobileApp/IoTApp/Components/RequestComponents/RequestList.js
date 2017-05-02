@@ -17,17 +17,19 @@ import RequestRowContainer from './RequestRowContainer.js';
 import RequestHeader from './RequestHeader.js';
 import getSortFunction from '../../Modules/SortFunctions.js';
 import {getRequests} from '../../Modules/Request.js';
+import {getNotes} from '../../Modules/Notes.js';
 
 export default class RequestList extends Component {
   constructor(props){
       super(props);
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "New/Open", sortCol: 'time'};
+      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "New/Open", sortCol: 'time', headerText: "All Service Owners", headerImage: "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg"};
   }
     
   componentDidMount(){
       this._getRequestData();
-      var reloadInterval = setInterval(this.onRefresh.bind(this), 300000); //for auto reloading data, currently set to every 5 minutes but is configurable
+      var reloadInterval = setInterval(this.onRefresh.bind(this), 60000); //for auto reloading data, currently set to every 5 minutes but is configurable
+      //var determineUrgencyInterval = setInterval(this.updateRowColors.bind(this), 60000); //for if different time intervals are needed
   }
     
   //Commented out for testing local data updates
@@ -41,17 +43,36 @@ export default class RequestList extends Component {
         this._getRequestData(); 
   }*/
     
+  
   _getRequestData(){
       callback = (json) => {
           var sortFunc = getSortFunction(this.state.sortCol);
-          this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))}, () => {
+          var requests = json['body-json'].Items.sort(sortFunc);
+          for(i=0; i<requests.length; ++i){
+              //requests[i]["urgencyColor"] = this.getRowColor(requests[i]);
+              this.setRowColor(requests[i]);
+          }
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(requests)}, () => {
               if(this.state.viewStatus == "New/Open"){
                 this._filterOutClosedRequests();
               }
           });
       };
       getRequests(this.state.viewServiceOwner, this.state.viewStatus, callback);
-  } 
+  }
+    
+  /*_getRequestData(){
+      callback = (json) => {
+          var sortFunc = getSortFunction(this.state.sortCol);
+          this.setState({dataSource: this.state.dataSource.cloneWithRows(json['body-json'].Items.sort(sortFunc))}, () => {
+              this.updateRowColors(); 
+              if(this.state.viewStatus == "New/Open"){
+                this._filterOutClosedRequests();
+              }
+          });
+      };
+      getRequests(this.state.viewServiceOwner, this.state.viewStatus, callback);
+  }*/
     
   _filterOutClosedRequests(){
       var unfilteredData = this.state.dataSource._dataBlob.s1;
@@ -73,14 +94,46 @@ export default class RequestList extends Component {
   }
     
   onFilter(serviceOwner, status){
-      this.setState({viewServiceOwner: serviceOwner, viewStatus: status}, this._getRequestData);
+      function getHeaderText(serviceOwner){
+        switch(serviceOwner){
+            case "All Service Owners":
+                return "All Service Owners";
+                break;
+            case "DISCOVEReHub":
+                return "DISCOVERe Hub";
+                break;
+            case "P4P":
+                return "Pay for Print";
+                break;
+            default:
+                return "All Service Owners";
+        }
+      }
+    
+      function getHeaderImage(serviceOwner){
+        switch(serviceOwner){
+            case "All Service Owners":
+                return "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg";
+                break;
+            case "DISCOVEReHub":
+                return "http://er.educause.edu/~/media/images/articles/2015/7/ero1571figure1.jpg?la=en";
+                break;
+            case "P4P":
+                return "https://schmidlawlibrary.files.wordpress.com/2013/07/img_0056.jpg";
+                break;
+            default:
+                return "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg";
+        }
+      } 
+           
+      this.setState({viewServiceOwner: serviceOwner, viewStatus: status, headerText: getHeaderText(serviceOwner), headerImage: getHeaderImage(serviceOwner)}, this._getRequestData);
   }
     
   onSortCol(activeCol){
       //this.setState({sortCol: activeCol});
       //this._getRequestData();
       var sortFunc = getSortFunction(activeCol);
-      var unsortedData = this.state.dataSource._dataBlob.s1
+      var unsortedData = this.state.dataSource._dataBlob.s1;
       var sortedData = unsortedData.slice();
       sortedData.sort(sortFunc);
       this.setState({sortCol: activeCol, dataSource: this.state.dataSource.cloneWithRows(sortedData)});
@@ -106,7 +159,7 @@ export default class RequestList extends Component {
     
   updateLocalData(rowID, status){
       var oldData = this.state.dataSource._dataBlob.s1;
-      if((this.state.viewStatus == "New/Open" && status == "closed") || (this.state.viewStatus != "All Statuses" && this.state.viewStatus != "New/Open" && this.state.viewStatus != status)){
+      if((this.state.viewStatus == "New/Open" && status == "closed") || (this.state.viewStatus != "All Statuses" && this.state.viewStatus != "New/Open" && this.state.viewStatus != status)){ //if new status not in the current filtered view
           delete oldData[rowID];
           var updatedData = oldData.slice();
           this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
@@ -115,13 +168,72 @@ export default class RequestList extends Component {
           var updatedData = oldData.slice();
           updatedData[rowID] = {...oldData[rowID]};
           updatedData[rowID].currstatus.S = status;
+          this.setRowColor(updatedData[rowID]);
           this.setState({dataSource: this.state.dataSource.cloneWithRows(updatedData)});
       }
+  }
+
+  setRowColor(request){
+    function getTimeDiffColor(minutesDifferent){
+        //have intervals be an input array for configuration?
+        if(minutesDifferent < 10){
+            return '#fdfdfd';
+        }
+        else if(minutesDifferent < 20){
+            return '#fdfd96';
+        }
+        else if(minutesDifferent < 30){
+            return '#ffc65f';
+        }
+        else{
+            return '#ff7b7b';
+        }
+    }
+  
+    if(request.currstatus.S == "closed"){
+        //return '#a3a3a3';
+        request["urgencyColor"] =  '#a3a3a3';
+    }
+    else{
+        var currTime = new Date();
+        //if(request.currstatus.S == "new"){
+            var minutesSinceArrived = (currTime-request.timeStamp.S)/(60000);
+            //return getTimeDiffColor(minutesSinceArrived);
+            request["urgencyColor"] = getTimeDiffColor(minutesSinceArrived);
+        /*}
+        else if(request.currstatus.S == "open"){
+            callback = (json) => {
+                var notes = json['body-json'].Items;
+                if(notes != null){
+                    lastServiceTime = notes[notes.length-1].timeStamp.S;
+                    minutesSinceLastServiced = (currTime-lastServiceTime)/(60000); //maybe "cache" this?
+                    request["urgencyColor"] = getTimeDiffColor(minutesSinceLastServiced);
+                }
+            };
+            getNotes(request, callback);
+        }*/
+    }
+      
+  }
+
+  updateRowColors(){
+      var oldRows = this.state.dataSource._dataBlob.s1;
+      var newRows = oldRows.slice();
+      for(i=0; i<oldRows.length; i++){
+          newRows[i] = {...oldRows[i]};
+          //newRows[i]["urgencyColor"] = this.getRowColor(oldRows[i].currstatus.S);
+          this.setRowColor(newRows[i]);
+      }
+      this.setState({dataSource: this.state.dataSource.cloneWithRows(newRows)});
+  }
+
+  onLayout(event){
+      
   }
     
   render() {
       return (
-        <Container style={{backgroundColor: '#F5FCFF'}}>
+        <Container onLayout={(event) => this.onLayout(event)} style={{backgroundColor: '#F5FCFF'}}>
             <Header style={{backgroundColor: '#002C76'}}>
                 <Title style={styles.headerTitle}>SERVICE REQUESTS</Title>
                 <Button transparent>{''}</Button>
@@ -130,17 +242,17 @@ export default class RequestList extends Component {
                 </Button>
             </Header>
             <Image
-                source={{uri: "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg"}}
+                source={{uri: this.state.headerImage}}
                 style={styles.backgroundImage}
             >
                 <Text style={styles.backgroundImageText}>
-                    {this.state.viewServiceOwner.toUpperCase()}
+                    {this.state.headerText}
                 </Text>
             </Image>
-            <View style={{flex: 1}}>
+            <View style={styles.requestListHeaderContainer}>
                 <RequestHeader sortCol={this.state.sortCol} onSortCol={this.onSortCol.bind(this)} />
             </View>
-            <View style={{flex: 8}}>{/*, margin: 10, marginBottom: 0}}>*/}
+            <View style={styles.requestListContainer}>{/*, margin: 10, marginBottom: 0}}>*/}
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}

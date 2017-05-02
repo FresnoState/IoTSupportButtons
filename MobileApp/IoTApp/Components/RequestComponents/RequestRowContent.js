@@ -7,36 +7,16 @@ import {
 
 import {Col, Row, Grid, Card, CardItem} from 'native-base';
 
+import styles from '../../Styles.js';
 import {getNotes} from '../../Modules/Notes.js';
 
 export default class RequestRowContent extends Component{
     constructor(props){
         super(props);
-        this.state = {rowColor: '#fff'};
     }
-    
-    /*componentDidMount(){
-        this.determineUrgency();
-        var reloadInterval = setInterval(this.determineUrgency.bind(this), 300000);
-    }
-    
-    componentWillReceiveProps(nextProps){
-        this.determineUrgency();
-        console.log(new Date(Number(nextProps.requestData.timeStamp.S))+" "+ nextProps.requestData.currstatus.S);
-        if(this.props != nextProps){
-            this.determineUrgency();
-            this.setState({rowColor: 'purple'});
-        }
-    }*/
         
     determineUrgency(){ 
-        /*if(this.props.requestData.currstatus.S == "closed"){
-            //console.log("determining urgency: "+ new Date(Number(this.props.requestData.timeStamp.S)));
-            this.setState({rowColor: 'blue'});
-        }*/
-        //console.log(this.props.requestData.currstatus.S+": "+ new Date(Number(this.props.requestData.timeStamp.S)));
         if(this.props.requestData.currstatus.S == "closed"){
-            //console.log("Closed: "+ new Date(Number(this.props.requestData.timeStamp.S)));
             this.setState({rowColor: '#a3a3a3'});
         }
         else{
@@ -81,31 +61,27 @@ export default class RequestRowContent extends Component{
         var timestamp = new Date(Number(this.props.requestData.timeStamp.S));
         return (
             <Grid>
-            {/*<Card style={{backgroundColor: this.state.rowColor, padding: 10, borderRadius: 10}}>*/}
-            <Card style={{backgroundColor: rowColor, padding: 10, borderRadius: 10}}>
-                    <Row >
+                <Card style={[styles.requestCard, {backgroundColor:  this.props.requestData.urgencyColor}]}>
+                    <Row>
                         <Col size={0.25} style={{padding: 5}}>
-                            <Text style={{fontSize: fontScale}}>
+                            <Text style={styles.requestCardText}>
                                 {timestamp.toLocaleDateString("en-us")}
                             </Text>
-                            <Text style={{fontSize: fontScale}}>
+                            <Text style={styles.requestCardText}>
                                 {timestamp.toLocaleTimeString("en-us", {hour: "2-digit", minute: "2-digit"})}
                             </Text> 
                         </Col>
                         <Col size={0.3} style={{padding: 5}}>
-                            <Text style={{fontSize: fontScale}}>
+                            <Text style={styles.requestCardText}>
                                 {this.props.requestData.location.S}
                             </Text>
                         </Col>
                         <Col size={0.25} style={{padding: 5}}>
-                            <Text style={{fontSize: fontScale}}>
+                            <Text style={styles.requestCardText}>
                                 {this.props.requestData.item.S}
                             </Text>
                         </Col>
                         <Col size={0.2} style={{padding: 5}}>
-                            {/*<Text style={{fontSize: fontScale}}>
-                                {this.props.requestData.currstatus.S}
-                            </Text>*/}
                         </Col>
                     </Row>
                 </Card>
