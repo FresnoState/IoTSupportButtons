@@ -130,6 +130,13 @@ export default styles = StyleSheet.create({
         margin: 10,
         borderRadius: 10
     },
+    noNotesContainer: {
+        backgroundColor: '#efefef',
+        margin: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     noteCard: {
         backgroundColor: '#EFF2B9',
         borderRadius: 10,

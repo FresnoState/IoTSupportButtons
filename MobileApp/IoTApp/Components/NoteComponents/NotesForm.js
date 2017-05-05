@@ -105,6 +105,17 @@ export default class NotesForm extends Component{
                 <NotesButtons onAdd={this.onAdd.bind(this)} confirmClose={this.confirmClose.bind(this)} />
             </Row>
         );
+        var prevNotesSize = this.props.requestData.currstatus.S == "closed" ? 7 : 3;
+        var prevNotes = this.props.requestData.currstatus.S == "new" ? 
+                    (<Row size={prevNotesSize} style={styles.noNotesContainer}>
+                        <Text>NO NOTES YET</Text>
+                    </Row>):
+                    (<Row size={prevNotesSize} style={styles.notesContainer}>
+                        <ListView
+                            dataSource={this.state.dataSource}
+                            renderRow={this.renderRow.bind(this)}
+                        />
+                    </Row>);
         var textbox = this.props.requestData.currstatus.S == "closed" ? (<View></View>) : (
             <Row size={2}>
                 <View style={styles.notesInputContainer}>
@@ -118,7 +129,6 @@ export default class NotesForm extends Component{
                 </View>
             </Row>
         );
-        var oldNotesSize = this.props.requestData.currstatus.S == "closed" ? 7 : 3;
         return (
             <KeyboardAvoidingView behavior='position' style={{flex: 1}} contentContainerStyle={{flex: 1}}>
                 <Header style={{backgroundColor: '#002C76'}}>
@@ -136,12 +146,7 @@ export default class NotesForm extends Component{
                             {this.props.requestData.currstatus.S.toUpperCase()}
                         </Text>
                     </Row>
-                    <Row size={oldNotesSize} style={styles.notesContainer}>
-                        <ListView
-                            dataSource={this.state.dataSource}
-                            renderRow={this.renderRow.bind(this)}
-                        />
-                    </Row>
+                    {prevNotes}
                     {textbox}
                     {buttons}
                 </Grid>
