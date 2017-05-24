@@ -18,17 +18,18 @@ import RequestHeader from './RequestHeader.js';
 import getSortFunction from '../../Modules/SortFunctions.js';
 import {getRequests} from '../../Modules/Request.js';
 import {getNotes} from '../../Modules/Notes.js';
+import {refreshMilliseconds} from '../../IntervalTimeConfigurations.js'; //configurable time interval for autorefresh
 
 export default class RequestList extends Component {
   constructor(props){
       super(props);
       const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "New/Open", sortCol: 'time', headerText: "All Service Owners", headerImage: "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg"};
+      this.state = {dataSource: ds.cloneWithRows([]), refreshing: false, viewServiceOwner: "All Service Owners", viewStatus: "New/Open", sortCol: 'time', headerText: "All Service Owners", headerImage: "header1"};
   }
     
   componentDidMount(){
       this._getRequestData();
-      var reloadInterval = setInterval(this.onRefresh.bind(this), 60000); //for auto reloading data, currently set to every 5 minutes but is configurable
+      var reloadInterval = setInterval(this.onRefresh.bind(this), refreshMilliseconds); 
       //var determineUrgencyInterval = setInterval(this.updateRowColors.bind(this), 60000); //for if different time intervals are needed
   }
     
@@ -49,7 +50,6 @@ export default class RequestList extends Component {
           var sortFunc = getSortFunction(this.state.sortCol);
           var requests = json['body-json'].Items.sort(sortFunc);
           for(i=0; i<requests.length; ++i){
-              //requests[i]["urgencyColor"] = this.getRowColor(requests[i]);
               this.setRowColor(requests[i]);
           }
           this.setState({dataSource: this.state.dataSource.cloneWithRows(requests)}, () => {
@@ -113,16 +113,16 @@ export default class RequestList extends Component {
       function getHeaderImage(serviceOwner){
         switch(serviceOwner){
             case "All Service Owners":
-                return "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg";
+                return "header1";
                 break;
             case "DISCOVEReHub":
-                return "http://er.educause.edu/~/media/images/articles/2015/7/ero1571figure1.jpg?la=en";
+                return "header3";
                 break;
             case "P4P":
-                return "https://schmidlawlibrary.files.wordpress.com/2013/07/img_0056.jpg";
+                return "header2";
                 break;
             default:
-                return "http://www.fresnostate.edu/jcast/fsn/images/fsn/Libraryupload.jpg";
+                return "header1";
         }
       } 
            
@@ -130,8 +130,6 @@ export default class RequestList extends Component {
   }
     
   onSortCol(activeCol){
-      //this.setState({sortCol: activeCol});
-      //this._getRequestData();
       var sortFunc = getSortFunction(activeCol);
       var unsortedData = this.state.dataSource._dataBlob.s1;
       var sortedData = unsortedData.slice();
@@ -174,6 +172,7 @@ export default class RequestList extends Component {
   }
 
   setRowColor(request){
+    console.log(urgencyMinutesDifferent);
     function getTimeDiffColor(minutesDifferent){
         //have intervals be an input array for configuration?
         if(minutesDifferent < 10){
@@ -227,13 +226,14 @@ export default class RequestList extends Component {
       this.setState({dataSource: this.state.dataSource.cloneWithRows(newRows)});
   }
 
-  onLayout(event){
-      
+  scrollToTop(){
+      this.listView.scrollTo(0);
   }
     
   render() {
+      //var image = require(this.state.headerImage);
       return (
-        <Container onLayout={(event) => this.onLayout(event)} style={{backgroundColor: '#F5FCFF'}}>
+        <Container style={{backgroundColor: '#F5FCFF'}}>
             <Header style={{backgroundColor: '#002C76'}}>
                 <Title style={styles.headerTitle}>SERVICE REQUESTS</Title>
                 <Button transparent>{''}</Button>
@@ -245,15 +245,18 @@ export default class RequestList extends Component {
                 source={{uri: this.state.headerImage}}
                 style={styles.backgroundImage}
             >
-                <Text style={styles.backgroundImageText}>
-                    {this.state.headerText}
-                </Text>
+                <View style={styles.backgroundImageBar}>
+                    <Text style={styles.backgroundImageText}>
+                        {this.state.headerText}
+                    </Text>
+                </View>
             </Image>
             <View style={styles.requestListHeaderContainer}>
                 <RequestHeader sortCol={this.state.sortCol} onSortCol={this.onSortCol.bind(this)} />
             </View>
             <View style={styles.requestListContainer}>{/*, margin: 10, marginBottom: 0}}>*/}
                 <ListView
+                    ref={(ListView) => {this.listView = ListView;}}
                     dataSource={this.state.dataSource}
                     renderRow={this.renderRow.bind(this)}
                     refreshControl={
@@ -265,7 +268,25 @@ export default class RequestList extends Component {
                     }
                 />
             </View>
-            <Footer>
+            <Footer style={{justifyContent: 'flex-end'}}>
+                <FooterTab>
+                </FooterTab>
+                <FooterTab>
+                </FooterTab>
+                <FooterTab>
+                    {/*<Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>
+                    <Button transparent>{''}</Button>*/}
+                    <Button onPress={this.scrollToTop.bind(this)}>
+                        <Icon style={styles.headerIcon} name='ios-arrow-dropup' />
+                    </Button>
+                </FooterTab>
             </Footer>
         </Container>
       );

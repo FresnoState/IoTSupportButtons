@@ -38,10 +38,16 @@ export default styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    backgroundImageBar: {
+        backgroundColor: 'rgba(34, 38, 87, 0.77)', width: height, 
+        alignItems: 'center', 
+        justifyContent: 'center'
+    },
     backgroundImageText: {
         color: '#FFF',
         fontSize: fontScale*2,
-        fontWeight: '900'
+        fontWeight: '900',
+        margin: 3
     },
     buttonText: {
         margin: 10,
