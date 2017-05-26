@@ -172,7 +172,6 @@ export default class RequestList extends Component {
   }
 
   setRowColor(request){
-    console.log(urgencyMinutesDifferent);
     function getTimeDiffColor(minutesDifferent){
         //have intervals be an input array for configuration?
         if(minutesDifferent < 10){
