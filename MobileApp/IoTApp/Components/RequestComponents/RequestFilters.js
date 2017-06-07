@@ -33,9 +33,8 @@ export default class RequestFilters extends Component{
         }
     }
     
-    clearDefaults(){
-        this.setState({selectedServiceOwner: "All Service Owners"});
-        this.setState({selectedStatus: "New/Open"});
+    clearDefaults(){ //clear defaults and leave filters page
+        this.setState({selectedServiceOwner: "All Service Owners", selectedStatus: "New/Open"}, () =>  this.submit());
     }
     
     onCancel(){ //"X" button functionality for closing out of scene
